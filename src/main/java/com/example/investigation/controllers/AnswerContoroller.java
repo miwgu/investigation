@@ -145,7 +145,7 @@ public class AnswerContoroller {
     * */
 
     @GetMapping("/getAllAnswersWithPatientIdBySurveyId/{id}")
-    List<Map<String, Object>> getQuestionAnswersBySurveyId(@PathVariable long id){
+    List<Map<String, Object>> getQuestionAnswersBySurveyId2(@PathVariable long id){
 
         final String sql=
                 "SELECT "+
@@ -211,5 +211,81 @@ public class AnswerContoroller {
         }
         return json;
     }
+
+
+
+    /*
+    * http://localhost:8080/answer/getAllAnswersWithPatientIdBySurveyId2/2
+    * */
+
+    @GetMapping("/getAllAnswersWithPatientIdBySurveyId2/{id}")
+    List<Map<String, Object>> getQuestionAnswersBySurveyId(@PathVariable long id){
+
+        final String sql=
+                "SELECT "+
+                        "t1.patient_id as patient_id, "+
+                        "t1.q1 as q1, "+
+                        "t2.q2 as q2, "+
+                        "t3.q3 as q3, "+
+                        "t4.q4 as q4, "+
+                        "t5.q5 as q5 "+
+
+                        "FROM (SELECT answer.patient_id as patient_id, ao.item as q1 "+
+                        "FROM answer " +
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=6 "+
+                        "AND survey.id=:id) as t1 "+
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q2 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=7 "+
+                        "AND survey.id=:id) as t2 "+
+                        "ON t2.patient_id = t1.patient_id "+
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q3 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=8 "+
+                        "AND survey.id=:id) as t3 "+
+                        "ON t3.patient_id = t2.patient_id "+
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q4 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=9 "+
+                        "AND survey.id=:id) as t4 "+
+                        "ON t4.patient_id = t3.patient_id "+
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q5 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=10 "+
+                        "AND survey.id=:id) as t5 "+
+                        "ON t5.patient_id = t4.patient_id ";
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
+
+        List<Map<String,Object>> json = null;
+
+        try {
+            json= jdbcTemplate.queryForList(sql,param);
+        } catch (EmptyResultDataAccessException e){
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+
 }
 

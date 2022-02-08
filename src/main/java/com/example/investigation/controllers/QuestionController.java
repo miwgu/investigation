@@ -34,6 +34,9 @@ public class QuestionController {
         return questionRepository.findAllById(id);
     }
 
+    /*
+    * http://localhost:8080/question/bySurveyId/1
+    * */
     @GetMapping("/bySurveyId/{survey_id}")
     public Iterable<Question> getQuestionsBySurveyId(@PathVariable long survey_id){
         return questionRepository.findBySurveyId(survey_id);
