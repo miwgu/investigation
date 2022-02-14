@@ -1,9 +1,13 @@
 package com.example.investigation.controllers;
 
+import com.example.investigation.models.Question;
 import com.example.investigation.models.Survey;
+import com.example.investigation.repositories.QuestionRepository;
 import com.example.investigation.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/survey")
@@ -11,6 +15,9 @@ public class SurveyController {
 
     @Autowired
     private SurveyRepository surveyRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
 
     @GetMapping("/all")
@@ -40,6 +47,20 @@ public class SurveyController {
         surveyRepository.save(survey);
 
         return "Survey "+name+" was added";
+
+    }
+
+    /*
+     *http://localhost:8080/survey/delete/3
+     * */
+    @GetMapping(path = "/delete/{id}")
+    public String deleteSurvey(@PathVariable long id){
+        List<Question> QuestionUpdateSurvey = questionRepository.findBySurveyId(id);
+        QuestionUpdateSurvey.forEach(q -> q.setSurvey(null));
+        Survey existingSurvey = surveyRepository.findAllById(id);
+        surveyRepository.delete(existingSurvey);
+
+        return "Survey ID:"+ id +" "+"Survey:"+ existingSurvey.getName()+" was deleted";
 
     }
 }
