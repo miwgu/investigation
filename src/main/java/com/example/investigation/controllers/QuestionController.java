@@ -1,11 +1,15 @@
 package com.example.investigation.controllers;
 
+import com.example.investigation.models.AnswerOption;
 import com.example.investigation.models.Question;
 import com.example.investigation.models.Survey;
+import com.example.investigation.repositories.AnswerOptionRepository;
 import com.example.investigation.repositories.QuestionRepository;
 import com.example.investigation.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/question")
@@ -13,6 +17,9 @@ public class QuestionController {
 
     @Autowired
      private QuestionRepository questionRepository;
+
+    @Autowired
+     private AnswerOptionRepository answerOptionRepository;
 
     @Autowired
      private SurveyRepository surveyRepository;
@@ -43,16 +50,29 @@ public class QuestionController {
     }
 
     /*
-    * http://localhost:8080/question/add?text=test2&id=2
+    * http://localhost:8080/question/add?num=1&text=test1 psoriasis&id=1
     * */
     @GetMapping(path="/add")
-    public  String addQuestion(@RequestParam String text, @RequestParam long id ){
+    public  String addQuestion(@RequestParam long num, @RequestParam String text, @RequestParam long id ){
 
         Survey existingSurvey = surveyRepository.findAllById(id);
-        Question question =new Question(text, existingSurvey);
+        Question question =new Question(num, text, existingSurvey);
         questionRepository.save(question);
 
-        return "Question "+text+" was added";
+        return "Question No:"+num+ " " +text+" was added";
 
+    }
+
+    /*
+    *http://localhost:8080/question/delete/18
+    * */
+    @GetMapping(path = "/delete/{question_id}")
+    public  String deleteQuestion(@PathVariable("question_id") long id){
+        List<AnswerOption> AnOpUpdateQuestion = answerOptionRepository.findByQuestionId(id);
+        AnOpUpdateQuestion.forEach(ap -> ap.setQuestion(null));
+        Question existingQuestion = questionRepository.findById(id);
+        questionRepository.delete(existingQuestion);
+
+        return "Question ID:"+id+ " "+"Question:"+existingQuestion.getText()+ " was deleted";
     }
 }
