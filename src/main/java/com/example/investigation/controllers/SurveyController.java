@@ -63,4 +63,14 @@ public class SurveyController {
         return "Survey ID:"+ id +" "+"Survey:"+ existingSurvey.getName()+" was deleted";
 
     }
+    /*
+    *http://localhost:8080/survey/update
+    * */
+    @PostMapping(value="/update",consumes="application/json",produces="application/json")
+    public Survey updateSurvey (@RequestBody Survey survey){
+        Survey existingSurvey= surveyRepository.findAllById(survey.getId());
+        survey.setId(existingSurvey.getId());// set the same id and name is changed to the new one
+
+        return surveyRepository.save(survey);
+    }
 }

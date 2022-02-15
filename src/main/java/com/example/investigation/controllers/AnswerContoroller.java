@@ -72,6 +72,7 @@ public class AnswerContoroller {
     /*
     * http://localhost:8080/answer/getAllAnswersWithPatientId
     * */
+    /*
     @GetMapping("/getAllAnswersWithPatientId")
     List<Map<String, Object>> getQuestionAnswersWithPatient(){
 
@@ -90,7 +91,7 @@ public class AnswerContoroller {
                 "JOIN question ON question.id =ao.question_id "+
                 "JOIN survey ON survey.id =question.survey_id "+
                 "Where question_id=1 "+
-                "AND survey.name='Psoriasis') as t1 "+
+                "AND survey.name='Psoriasis -Grundläggande') as t1 "+
 
         "JOIN (SELECT answer.patient_id as patient_id, ao.item as q2 "+
                 "FROM answer "+
@@ -140,12 +141,15 @@ public class AnswerContoroller {
         return json;
     }
 
+     */
+
+
     /*
     * http://localhost:8080/answer/getAllAnswersWithPatientIdBySurveyId/1
     * */
 
     @GetMapping("/getAllAnswersWithPatientIdBySurveyId/{id}")
-    List<Map<String, Object>> getQuestionAnswersBySurveyId(@PathVariable long id){
+    List<Map<String, Object>> getQuestionAnswersPsoriasisGBySurveyId(@PathVariable long id){
 
         final String sql=
                 "SELECT "+
@@ -219,7 +223,7 @@ public class AnswerContoroller {
     * */
 
     @GetMapping("/getAllAnswersWithPatientIdBySurveyId2/{id}")
-    List<Map<String, Object>> getQuestionAnswersBySurveyId2(@PathVariable long id){
+    List<Map<String, Object>> getQuestionAnswersCancerBySurveyId(@PathVariable long id){
 
         final String sql=
                 "SELECT "+
