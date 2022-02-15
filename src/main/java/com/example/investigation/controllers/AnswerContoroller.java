@@ -145,7 +145,7 @@ public class AnswerContoroller {
     * */
 
     @GetMapping("/getAllAnswersWithPatientIdBySurveyId/{id}")
-    List<Map<String, Object>> getQuestionAnswersBySurveyId2(@PathVariable long id){
+    List<Map<String, Object>> getQuestionAnswersBySurveyId(@PathVariable long id){
 
         final String sql=
                 "SELECT "+
@@ -219,7 +219,7 @@ public class AnswerContoroller {
     * */
 
     @GetMapping("/getAllAnswersWithPatientIdBySurveyId2/{id}")
-    List<Map<String, Object>> getQuestionAnswersBySurveyId(@PathVariable long id){
+    List<Map<String, Object>> getQuestionAnswersBySurveyId2(@PathVariable long id){
 
         final String sql=
                 "SELECT "+
