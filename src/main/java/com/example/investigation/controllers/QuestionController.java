@@ -76,17 +76,4 @@ public class QuestionController {
         return "Question ID:"+id+ " "+"Question:"+existingQuestion.getText()+ " was deleted";
     }
 
-    /*
-     *http://localhost:8080/question/update
-     * */
-    /*
-    @PutMapping(value="/update",consumes="application/json",produces="application/json")
-    public Question updateQuestion (@RequestBody Question question){
-        Question existingQuestion= questionRepository.findById(question.getId());
-        question.setId(existingQuestion.getId());// set the same id and item question_id are changed to the new one
-
-        return questionRepository.save(question);
-    }
-
-     */
 }

@@ -1,7 +1,6 @@
 package com.example.investigation.controllers;
 
 import com.example.investigation.models.Patient;
-import com.example.investigation.models.Survey;
 import com.example.investigation.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

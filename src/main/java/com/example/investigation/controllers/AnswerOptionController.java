@@ -68,20 +68,4 @@ public class AnswerOptionController {
         return "Answer Option ID:"+id+ " "+"Answer Option:"+existingAO.getItem()+ " was deleted";
     }
 
-    /*
-     *http://localhost:8080/answerOption/update
-     * */
-    /*
-    @PutMapping(value="/update/{id}",consumes="application/json",produces="application/json")
-    public AnswerOption updateAnswerOption (@PathVariable("id") long id ,@RequestBody AnswerOption answerOption){
-        //AnswerOption existingAO= answerOptionRepository.findById(answerOption.getId());
-        //answerOption.setId(existingAO.getId());// set the same id and item question_id are changed to the new one
-        //answerOption.setId(existingAO.getQuestion().getId());
-
-        answerOption.setId(id);
-
-        return answerOptionRepository.save(answerOption);
-    }
-
-     */
 }
