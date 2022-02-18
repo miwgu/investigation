@@ -52,7 +52,7 @@ public class QuestionController {
     /*
     * http://localhost:8080/question/add?num=1&text=test1 psoriasis&id=1
     * */
-    @GetMapping(path="/add")
+    @PostMapping(path="/add")
     public  String addQuestion(@RequestParam long num, @RequestParam String text, @RequestParam long id ){
 
         Survey existingSurvey = surveyRepository.findAllById(id);
@@ -66,13 +66,27 @@ public class QuestionController {
     /*
     *http://localhost:8080/question/delete/18
     * */
-    @GetMapping(path = "/delete/{question_id}")
+    @DeleteMapping(path = "/delete/{question_id}")
     public  String deleteQuestion(@PathVariable("question_id") long id){
         List<AnswerOption> AnOpUpdateQuestion = answerOptionRepository.findByQuestionId(id);
-        AnOpUpdateQuestion.forEach(ap -> ap.setQuestion(null));
+        AnOpUpdateQuestion.forEach(aop -> aop.setQuestion(null));
         Question existingQuestion = questionRepository.findById(id);
         questionRepository.delete(existingQuestion);
 
         return "Question ID:"+id+ " "+"Question:"+existingQuestion.getText()+ " was deleted";
     }
+
+    /*
+     *http://localhost:8080/question/update
+     * */
+    /*
+    @PutMapping(value="/update",consumes="application/json",produces="application/json")
+    public Question updateQuestion (@RequestBody Question question){
+        Question existingQuestion= questionRepository.findById(question.getId());
+        question.setId(existingQuestion.getId());// set the same id and item question_id are changed to the new one
+
+        return questionRepository.save(question);
+    }
+
+     */
 }

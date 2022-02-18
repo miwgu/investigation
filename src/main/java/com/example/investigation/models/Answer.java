@@ -1,6 +1,8 @@
 package com.example.investigation.models;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 @Getter
@@ -16,7 +18,8 @@ public class Answer {
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne// delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
     @JoinColumn(name="answer_op_id", referencedColumnName = "id")
     private AnswerOption answerOption;
 

@@ -53,7 +53,7 @@ public class SurveyController {
     /*
      *http://localhost:8080/survey/delete/3
      * */
-    @GetMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public String deleteSurvey(@PathVariable long id){
         List<Question> QuestionUpdateSurvey = questionRepository.findBySurveyId(id);
         QuestionUpdateSurvey.forEach(q -> q.setSurvey(null));
@@ -66,7 +66,7 @@ public class SurveyController {
     /*
     *http://localhost:8080/survey/update
     * */
-    @PostMapping(value="/update",consumes="application/json",produces="application/json")
+    @PutMapping(value="/update",consumes="application/json",produces="application/json")
     public Survey updateSurvey (@RequestBody Survey survey){
         Survey existingSurvey= surveyRepository.findAllById(survey.getId());
         survey.setId(existingSurvey.getId());// set the same id and name is changed to the new one
