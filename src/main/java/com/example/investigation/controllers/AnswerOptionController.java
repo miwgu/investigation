@@ -3,7 +3,6 @@ package com.example.investigation.controllers;
 import com.example.investigation.models.Answer;
 import com.example.investigation.models.AnswerOption;
 import com.example.investigation.models.Question;
-import com.example.investigation.models.Survey;
 import com.example.investigation.repositories.AnswerOptionRepository;
 import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.QuestionRepository;
