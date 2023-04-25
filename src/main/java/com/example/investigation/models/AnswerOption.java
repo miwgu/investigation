@@ -26,9 +26,4 @@ public class AnswerOption {
         this.question = question;
     }
 
-    public AnswerOption(long id, String item, Question question) {
-        this.id = id;
-        this.item = item;
-        this.question = question;
-    }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/patient")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PatientController {
 
     @Autowired
@@ -26,27 +27,29 @@ public class PatientController {
 
     @GetMapping("/byName/{name}")
     public Iterable<Patient> getPatientByName(@PathVariable String name){
-        return patientRepository.findByName(name);
+        return null;//patientRepository.findByName(name);
     }
 
     @GetMapping("/byId/{id}")
     public Iterable<Patient> getPatientsById(@PathVariable long id) {
-        return patientRepository.findAllById(id);
+        return null;//patientRepository.findAllById(id);
 
     }
 
     /*
      * http://localhost:8080/patient/add?name=test1
      * */
-    @GetMapping(path="/add")
-    public  String addPatient(@RequestParam String name){
+    /*@GetMapping(path="/add")
+    public  String addPatient(@RequestParam String fullName){
 
-        Patient patient = new Patient(name);
+        Patient patient = new Patient(fullName,);
         patientRepository.save(patient);
 
-        return "Patient "+name+" was added";
+        return "Patient "+fullName+" was added";
 
     }
+
+     */
 
     /*
      *http://localhost:8080/patient/delete/3
@@ -58,7 +61,7 @@ public class PatientController {
         Patient existingPatient = patientRepository.findById(id);
         patientRepository.delete(existingPatient);
 
-        return "Patient ID:"+ id +" "+"Patient:"+ existingPatient.getName()+" was deleted";
+        return "Patient ID:"+ id +" "+"Patient:"+ existingPatient.getFullName()+" was deleted";
 
     }
     /*

@@ -12,12 +12,23 @@ import javax.persistence.*;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column()
     private  long id;
-    private String name;
+    @Column(length = 100, nullable = false)
+    private String socialNumber;
+    @Column(length = 100, nullable = false)
+    private String fullName;
+    @Column(length = 100, nullable = false)
+    private String email;
 
+/*
     public Patient(){}
 
     public Patient(String name) {
+
         this.name = name;
     }
+
+ */
+
 }

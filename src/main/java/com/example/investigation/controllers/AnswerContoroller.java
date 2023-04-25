@@ -2,21 +2,20 @@ package com.example.investigation.controllers;
 
 import com.example.investigation.models.Answer;
 import com.example.investigation.repositories.AnswerRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/answer")
+@RequestMapping(path="/answer")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AnswerContoroller {
 
     @Autowired
@@ -24,7 +23,7 @@ public class AnswerContoroller {
 
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
-
+    @Operation(summary = "Get all answers")
     @GetMapping("/all")
     public Iterable<Answer> getAllPatients() {
         return answerRepository.findAll();
@@ -42,7 +41,7 @@ public class AnswerContoroller {
 
 
     /*
-    * http://localhost:8080/answer/getPatientidQuestionAnswerBySurveyName/2
+    * http://localhost:8080/api/v1/answer/getPatientidQuestionAnswerBySurveyName/2
     *
     *  */
 
@@ -145,7 +144,7 @@ public class AnswerContoroller {
 
 
     /*
-    * http://localhost:8080/answer/getAllAnswersWithPatientIdBySurveyId/1
+    * http://localhost:8080/api/v1/answer/getAllAnswersWithPatientIdBySurveyId/1
     * */
 
     @GetMapping("/getAllAnswersWithPatientIdBySurveyId/{id}")
@@ -158,7 +157,9 @@ public class AnswerContoroller {
                         "t2.q2 as q2, "+
                         "t3.q3 as q3, "+
                         "t4.q4 as q4, "+
-                        "t5.q5 as q5 "+
+                        "t5.q5 as q5, "+
+                        "t6.q6 as q6, "+
+                        "t7.q7 as q7 "+
 
                         "FROM (SELECT answer.patient_id as patient_id, ao.item as q1 "+
                         "FROM answer " +
@@ -202,7 +203,25 @@ public class AnswerContoroller {
                         "JOIN survey ON survey.id =question.survey_id "+
                         "Where question_id=5 "+
                         "AND survey.id=:id) as t5 "+
-                        "ON t5.patient_id = t4.patient_id ";
+                        "ON t5.patient_id = t4.patient_id " +
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q6 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=6 "+
+                        "AND survey.id=:id) as t6 "+
+                        "ON t6.patient_id = t5.patient_id " +
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q7 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=7 "+
+                        "AND survey.id=:id) as t7 "+
+                        "ON t7.patient_id = t6.patient_id ";
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
 
@@ -232,14 +251,16 @@ public class AnswerContoroller {
                         "t2.q2 as q2, "+
                         "t3.q3 as q3, "+
                         "t4.q4 as q4, "+
-                        "t5.q5 as q5 "+
+                        "t5.q5 as q5, "+
+                        "t6.q6 as q6, "+
+                        "t7.q7 as q7 "+
 
                         "FROM (SELECT answer.patient_id as patient_id, ao.item as q1 "+
                         "FROM answer " +
                         "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
                         "JOIN question ON question.id =ao.question_id "+
                         "JOIN survey ON survey.id =question.survey_id "+
-                        "Where question_id=6 "+
+                        "Where question_id=8 "+
                         "AND survey.id=:id) as t1 "+
 
                         "JOIN (SELECT answer.patient_id as patient_id, ao.item as q2 "+
@@ -247,7 +268,7 @@ public class AnswerContoroller {
                         "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
                         "JOIN question ON question.id =ao.question_id "+
                         "JOIN survey ON survey.id =question.survey_id "+
-                        "Where question_id=7 "+
+                        "Where question_id=9 "+
                         "AND survey.id=:id) as t2 "+
                         "ON t2.patient_id = t1.patient_id "+
 
@@ -256,7 +277,7 @@ public class AnswerContoroller {
                         "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
                         "JOIN question ON question.id =ao.question_id "+
                         "JOIN survey ON survey.id =question.survey_id "+
-                        "Where question_id=8 "+
+                        "Where question_id=10 "+
                         "AND survey.id=:id) as t3 "+
                         "ON t3.patient_id = t2.patient_id "+
 
@@ -265,7 +286,7 @@ public class AnswerContoroller {
                         "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
                         "JOIN question ON question.id =ao.question_id "+
                         "JOIN survey ON survey.id =question.survey_id "+
-                        "Where question_id=9 "+
+                        "Where question_id=11 "+
                         "AND survey.id=:id) as t4 "+
                         "ON t4.patient_id = t3.patient_id "+
 
@@ -274,9 +295,31 @@ public class AnswerContoroller {
                         "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
                         "JOIN question ON question.id =ao.question_id "+
                         "JOIN survey ON survey.id =question.survey_id "+
-                        "Where question_id=10 "+
+                        "Where question_id=12 "+
                         "AND survey.id=:id) as t5 "+
-                        "ON t5.patient_id = t4.patient_id ";
+                        "ON t5.patient_id = t4.patient_id " +
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q6 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=13 "+
+                        "AND survey.id=:id) as t6 "+
+                        "ON t6.patient_id = t5.patient_id " +
+
+                        "JOIN (SELECT answer.patient_id as patient_id, ao.item as q7 "+
+                        "FROM answer "+
+                        "JOIN answer_option ao ON ao.id= answer.answer_op_id "+
+                        "JOIN question ON question.id =ao.question_id "+
+                        "JOIN survey ON survey.id =question.survey_id "+
+                        "Where question_id=14 "+
+                        "AND survey.id=:id) as t7 "+
+                        "ON t7.patient_id = t6.patient_id ";
+
+
+
+
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
 
