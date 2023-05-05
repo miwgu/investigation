@@ -2,16 +2,22 @@ package com.example.investigation.repositories;
 
 import com.example.investigation.models.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     //List<Patient> findAllById(long id);
-    Optional<Patient> findAllById(long id);
-    List<Patient> findByFullName(String fullName);
-    List<Patient> findAllBySocialNumber(String socialNumber);
-    List<Patient> findAllByEmail(String email);
 
-    Patient findById(long id);
+    Optional<Patient> findById(Long id);
+    @Modifying
+    @Query//("select p from Patient p where p.fullName like %?1%")
+    ("select p from Patient p where LOWER (p.fullName) like LOWER(concat('%', ?1, '%'))")
+    List<Patient> findAllByFullName(String fullName);
+    List<Patient> findBySocialNumber(String socialNumber);
+    List<Patient> findByEmail(String email);
+
+
 }

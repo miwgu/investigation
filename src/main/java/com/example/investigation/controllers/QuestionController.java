@@ -43,7 +43,7 @@ public class QuestionController {
     }
 
     /*
-    * http://localhost:8080/question/bySurveyId/1
+    * http://localhost:8080/api/v1/question/bySurveyId/1
     * */
     @GetMapping("/bySurveyId/{survey_id}")
     public Iterable<Question> getQuestionsBySurveyId(@PathVariable long survey_id){
@@ -51,7 +51,7 @@ public class QuestionController {
     }
 
     /*
-    * http://localhost:8080/question/add?num=1&text=test1 psoriasis&id=1
+    * http://localhost:8080/api/v1/question/add?num=1&text=test1 psoriasis&id=1
     * */
     @PostMapping(path="/add")
     public  String addQuestion(@RequestParam long num, @RequestParam String text, @RequestParam long id ){
@@ -65,7 +65,7 @@ public class QuestionController {
     }
 
     /*
-    *http://localhost:8080/question/delete/18
+    *http://localhost:8080/api/v1/question/delete/18
     * */
     @DeleteMapping(path = "/delete/{question_id}")
     public  String deleteQuestion(@PathVariable("question_id") long id){

@@ -1,79 +1,151 @@
 package com.example.investigation.controllers;
 
-import com.example.investigation.models.Answer;
+import com.example.investigation.mappers.PatientMapper;
 import com.example.investigation.models.Patient;
-import com.example.investigation.repositories.AnswerRepository;
-import com.example.investigation.repositories.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.investigation.models.dto.PatientDTO;
+import com.example.investigation.services.patient.PatientService;
+import lombok.RequiredArgsConstructor;
+import nonapi.io.github.classgraph.json.JSONUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/patient")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PatientController {
 
-    @Autowired
-    private PatientRepository patientRepository;
+    private final PatientMapper patientMapper;
+    private final PatientService patientService;
 
-    @Autowired
-    private AnswerRepository answerRepository;
+//    public PatientController(PatientService patientService, PatientMapper patientMapper) {
+//        this.patientService = patientService;
+//        this.patientMapper = patientMapper;
+//
+//    }
 
     @GetMapping("/all")
-    public Iterable<Patient> getAllPatients() {
-        return patientRepository.findAll();
+    public ResponseEntity getAll() {
+        Collection<PatientDTO> patients = patientMapper.patientToPatientDto(
+                patientService.findAll());
+        return ResponseEntity.ok(patients);
     }
 
-    @GetMapping("/byName/{name}")
-    public Iterable<Patient> getPatientByName(@PathVariable String name){
-        return null;//patientRepository.findByName(name);
-    }
-
+    /*
+    * http://localhost:8080/api/v1/patient/byId/1
+    * */
     @GetMapping("/byId/{id}")
-    public Iterable<Patient> getPatientsById(@PathVariable long id) {
-        return null;//patientRepository.findAllById(id);
+    public ResponseEntity<PatientDTO> getById(@PathVariable long id) {
+        PatientDTO patientDTO = patientMapper.patientToPatientDto(patientService.findById(id));
+        return ResponseEntity.ok(patientDTO);
 
     }
 
     /*
-     * http://localhost:8080/patient/add?name=test1
-     * */
-    /*@GetMapping(path="/add")
-    public  String addPatient(@RequestParam String fullName){
-
-        Patient patient = new Patient(fullName,);
-        patientRepository.save(patient);
-
-        return "Patient "+fullName+" was added";
-
+    * http://localhost:8080/api/v1/patient/search/name/aki
+    * You can use @PathVariable if you want to write "search/name/{name}"
+    * */
+    @GetMapping("search/name/{name}")
+    public ResponseEntity<Collection<PatientDTO>> getAllByPatientName(@PathVariable String name) {
+        Collection<PatientDTO> patientDTOS = patientMapper.patientToPatientDto(patientService.findByName(name));
+        return ResponseEntity.ok(patientDTOS);
     }
 
+    /*
+    * http://localhost:8080/api/v1/patient/search/socialnumber?sn=195001011234
+    * You cannot use @PathVariable when you write ?sn=195001011234 You need to use @RequestParam
+    * */
+    @GetMapping("search/socialnumber")
+    public ResponseEntity<Collection<PatientDTO>> getBySocialNumber (@RequestParam String sn) {
+        Collection<PatientDTO> patientDTOS = patientMapper.patientToPatientDto(patientService.findBySocialNumber(sn));
+        return ResponseEntity.ok(patientDTOS);
+    }
+
+    /*
+     * http://localhost:8080/api/v1/patient/search/emil/sample2@hotmail.com
+     * You can use @PathVariable if you want to write "search/name/{name}"
+     * */
+
+    @GetMapping("search/email/{email}")
+    public ResponseEntity<Collection<PatientDTO>> getByEmail (@PathVariable  String email) {
+        Collection<PatientDTO> patientDTOS = patientMapper.patientToPatientDto(patientService.findByEmail(email));
+        return ResponseEntity.ok(patientDTOS);
+    }
+
+    /**
+     *
+     * @param patientDTO
+     * @return
      */
 
     /*
-     *http://localhost:8080/patient/delete/3
-     * */
-    @DeleteMapping(path = "/delete/{id}")
-    public String deletePatient(@PathVariable long id){
-        List<Answer> AnswerUpdatePatient = answerRepository.findByPatientId(id);
-        AnswerUpdatePatient.forEach(p -> p.setPatient(null));
-        Patient existingPatient = patientRepository.findById(id);
-        patientRepository.delete(existingPatient);
+    * http://localhost:8080/api/v1/patient/add
+    * */
 
-        return "Patient ID:"+ id +" "+"Patient:"+ existingPatient.getFullName()+" was deleted";
+    @PostMapping("/add")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public PatientDTO addPatient(@RequestBody PatientDTO patientDTO){
+        Patient patient = patientService.add(patientMapper.patientDtoToPatient(patientDTO));
+        // return ResponseEntity.status(HttpStatus.CREATED).build();
+        return patientMapper.patientToPatientDto(patient);
 
     }
-    /*
-     *http://localhost:8080/patient/update
-     * */
-    @PutMapping(value="/update",consumes="application/json",produces="application/json")
-    public Patient updatePatient (@RequestBody Patient patient){
-        Patient existingPatient= patientRepository.findById(patient.getId());
-        patient.setId(existingPatient.getId());// set the same id and name is changed to the new one
 
-        return patientRepository.save(patient);
+   /*
+   * http://localhost:8080/api/v1/patient/update/12
+   * */
+/*
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity updatePatient (@RequestBody PatientDTO patientDTO, @PathVariable long id){
+       if(id != patientDTO.getId())
+           return ResponseEntity.notFound().build();
+           patientService.update(patientMapper.patientDtoToPatient(patientDTO));
+
+       return ResponseEntity.noContent().build();
     }
+    */
+
+
+
+/*
+    @PutMapping("/update/{id}")
+    public PatientDTO updatePatient (@RequestBody PatientDTO patientDTO, @PathVariable long id) {
+//       if (id != patientDTO.getId()) {
+//            throw new RuntimeException("The patient with id " + id + "does not exist.");
+//        }
+        System.out.println("id: "+id);
+        System.out.println("patientDTO.getId()" +patientDTO.getId());
+
+        Patient patient = patientService.update(patientMapper.patientDtoToPatient(patientDTO));
+
+        return patientMapper.patientToPatientDto(patient);
+    }
+
+ */
+    @PatchMapping ("/update/{id}")
+    public PatientDTO updatePatient (@RequestBody PatientDTO patientDTO, @PathVariable long id){
+        Patient patient = patientMapper.patientDtoToPatient(patientDTO);
+        return patientMapper.patientToPatientDto(patientService.update(id, patient));
+    }
+
+
+
+   /*
+   * http://localhost:8080/api/v1/patient/delete/13
+   * */
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deletePatient(@PathVariable long id){
+
+        patientService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }

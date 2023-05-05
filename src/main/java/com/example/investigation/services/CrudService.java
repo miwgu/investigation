@@ -1,12 +1,14 @@
-package com.example.investigation.services;
+//package com.example.investigation.services;
+//
+//import java.util.Collection;
+//
+//public interface CrudService <T,ID>{
+//    T findById(ID id);
+//    Collection<T> findAll();
+//    T add(T entity);
+//    //T update(T entity);
+//    void deleteById(ID id);
+//
+//}
 
-import java.util.Collection;
-
-public interface CrudService <T,ID>{
-    T findById(ID id);
-    Collection<T> findAll();
-    T add(T entity);
-    T update(T entity);
-    void deleteById(ID id);
-
-}
+//JpaRepository provides all crudService
