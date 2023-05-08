@@ -1,77 +1,85 @@
 package com.example.investigation.controllers;
 
+import com.example.investigation.mappers.SurveyMapper;
 import com.example.investigation.models.Question;
 import com.example.investigation.models.Survey;
+import com.example.investigation.models.dto.PatientDTO;
+import com.example.investigation.models.dto.SurveyDTO;
 import com.example.investigation.repositories.QuestionRepository;
 import com.example.investigation.repositories.SurveyRepository;
+import com.example.investigation.services.survey.SurveyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/survey")
 @CrossOrigin(origins = "http://localhost:3000")
 public class SurveyController {
-
-    @Autowired
-    private SurveyRepository surveyRepository;
-
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final SurveyMapper surveyMapper;
+    private final SurveyService surveyService;
 
 
     @GetMapping("/all")
-    public Iterable<Survey> getAllSurvey(){
-        return surveyRepository.findAll();
+    public ResponseEntity getAll(){
+        Collection<SurveyDTO> surveys = surveyMapper.surveyToSurveyDto(
+                surveyService.findAll());
+        return ResponseEntity.ok(surveys);
     }
 
-    @GetMapping("/byName/{name}")
-    public Survey getSurveyByName(@PathVariable String name){
 
-        return surveyRepository.findByName(name);
-    }
-
-    @GetMapping("/byid/{id}")
-    public  Survey getSurveyById(@PathVariable long id){
-
-        return surveyRepository.findAllById(id);
+    @GetMapping("/byId/{id}")
+    public ResponseEntity <SurveyDTO> getById(@PathVariable long id){
+        SurveyDTO surveyDTO = surveyMapper.surveyToSurveyDto(surveyService.findById(id));
+        return ResponseEntity.ok(surveyDTO);
     }
 
     /*
-    * http://localhost:8080/survey/add?name=test
-    * */
-    @GetMapping(path="/add")
-    public  String addSurvey(@RequestParam String name){
-
-        Survey survey = new Survey(name);
-        surveyRepository.save(survey);
-
-        return "Survey "+name+" was added";
-
-    }
-
-    /*
-     *http://localhost:8080/survey/delete/3
+     * http://localhost:8080/api/v1/survey/byName/cancer
      * */
-    @DeleteMapping(path = "/delete/{id}")
-    public String deleteSurvey(@PathVariable long id){
-        List<Question> QuestionUpdateSurvey = questionRepository.findBySurveyId(id);
-        QuestionUpdateSurvey.forEach(q -> q.setSurvey(null));
-        Survey existingSurvey = surveyRepository.findAllById(id);
-        surveyRepository.delete(existingSurvey);
-
-        return "Survey ID:"+ id +" "+"Survey:"+ existingSurvey.getName()+" was deleted";
-
+    @GetMapping("/byName/{name}")
+    public ResponseEntity <Collection<SurveyDTO>>getByName(@PathVariable String name){
+        Collection<SurveyDTO> surveyDTOS = surveyMapper.surveyToSurveyDto(surveyService.findByName(name));
+        return ResponseEntity.ok(surveyDTOS);
     }
-    /*
-    *http://localhost:8080/survey/update
-    * */
-    @PutMapping(value="/update",consumes="application/json",produces="application/json")
-    public Survey updateSurvey (@RequestBody Survey survey){
-        Survey existingSurvey= surveyRepository.findAllById(survey.getId());
-        survey.setId(existingSurvey.getId());// set the same id and name is changed to the new one
 
-        return surveyRepository.save(survey);
+    /*
+     * http://localhost:8080/api/v1/survey/add
+     * */
+    @PostMapping(path="/add")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public  SurveyDTO addSurvey(@RequestBody SurveyDTO surveyDTO){
+        Survey survey = surveyService.add(surveyMapper.surveyDtoToSurvey(surveyDTO));
+        return surveyMapper.surveyToSurveyDto(survey);
+    }
+
+
+
+    /*
+    *http://localhost:8080/api/v1/survey/update/4
+    * */
+
+    @PatchMapping("/update/{id}")
+    public SurveyDTO updateSurvey (@RequestBody SurveyDTO surveyDTO, @PathVariable long id){
+        Survey survey= surveyMapper.surveyDtoToSurvey(surveyDTO);
+        return surveyMapper.surveyToSurveyDto(surveyService.update(id, survey));
+    }
+
+
+    /*
+     *http://localhost:8080/api/v1/survey/delete/3
+     * */
+
+    @DeleteMapping( "/delete/{id}")
+    public ResponseEntity deleteSurvey(@PathVariable long id){
+        surveyService.deleteById(id);
+        return ResponseEntity.noContent().build();
+
     }
 }

@@ -17,7 +17,6 @@ import java.util.NoSuchElementException;
 public class PatientServiceImpl implements PatientService{
 
     private final Logger logger =  LoggerFactory.getLogger(PatientServiceImpl.class);
-    //private final Logger logger;
     private final PatientRepository patientRepository;
 
     //public  PatientServiceImpl(PatientRepository patientRepository){
@@ -29,7 +28,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     private Patient getPatient(long id) {
-        return patientRepository.findById(id).orElseThrow(() ->  new ResourceNotFoundException("This is not exist."));
+        return patientRepository.findById(id).orElseThrow(() ->  new ResourceNotFoundException("This id, "+ id +" does not exist."));
     }
 
 
@@ -58,8 +57,6 @@ public class PatientServiceImpl implements PatientService{
         if(patient != null)
             return patientRepository.save(patient);
         return null;
-
-//        return patientRepository.save(patient);
     }
 
 
@@ -72,7 +69,7 @@ public class PatientServiceImpl implements PatientService{
 //        if(existPatient==null){
 //            return null;
 //        }
-        if(patient.getFullName()!= null && !patient.getFullName().isEmpty()){ // check name is not Null and not empty
+        if(patient.getFullName()!= null && !patient.getFullName().isEmpty()){ // check name is not Null and not empty ""
             existPatient.setFullName(patient.getFullName());
         }
         if(patient.getSocialNumber()!=null && !patient.getSocialNumber().isEmpty()){
@@ -87,12 +84,14 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public void deleteById(Long id) {
-        if (patientRepository.existsById(id)){
-            Patient patient = patientRepository.findById(id).get();
+        //if (patientRepository.existsById(id)){
+            //Patient patient = patientRepository.findById(id).get();
             // I need to set null to the all answers
             // Otherwise I connot delete patient;
-            patientRepository.delete(patient);
-        } else logger.warn( "Patient id: "+ id + " doesn´t exist ");
+            //patientRepository.delete(patient);
+        //} else logger.warn( "Patient id: "+ id + " doesn´t exist ");
 
+        Patient patient = findById(id);
+        patientRepository.delete(patient);
     }
 }

@@ -12,10 +12,13 @@ public class Survey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-
+/*
     public Survey(){}
 
     public Survey(String name) {
         this.name = name;
     }
+
+ */
+
 }

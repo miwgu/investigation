@@ -53,6 +53,7 @@ public class QuestionController {
     /*
     * http://localhost:8080/api/v1/question/add?num=1&text=test1 psoriasis&id=1
     * */
+    /*
     @PostMapping(path="/add")
     public  String addQuestion(@RequestParam long num, @RequestParam String text, @RequestParam long id ){
 
@@ -63,6 +64,8 @@ public class QuestionController {
         return "Question No:"+num+ " " +text+" was added";
 
     }
+
+     */
 
     /*
     *http://localhost:8080/api/v1/question/delete/18

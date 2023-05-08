@@ -56,7 +56,7 @@ public class PatientController {
     }
 
     /*
-    * http://localhost:8080/api/v1/patient/search/socialnumber?sn=195001011234
+    * http://localhost:8080/patient/search/socialnumber?sn=195001011234
     * You cannot use @PathVariable when you write ?sn=195001011234 You need to use @RequestParam
     * */
     @GetMapping("search/socialnumber")
@@ -76,11 +76,6 @@ public class PatientController {
         return ResponseEntity.ok(patientDTOS);
     }
 
-    /**
-     *
-     * @param patientDTO
-     * @return
-     */
 
     /*
     * http://localhost:8080/api/v1/patient/add
