@@ -1,74 +1,78 @@
 package com.example.investigation.controllers;
 
-import com.example.investigation.models.AnswerOption;
+import com.example.investigation.mappers.QuestionMapper;
 import com.example.investigation.models.Question;
-import com.example.investigation.models.Survey;
-import com.example.investigation.repositories.AnswerOptionRepository;
-import com.example.investigation.repositories.QuestionRepository;
-import com.example.investigation.repositories.SurveyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.investigation.models.dto.QuestionDTO;
+import com.example.investigation.services.question.QuestionService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/question")
 @CrossOrigin(origins = "http://localhost:3000")
 public class QuestionController {
 
-    @Autowired
-     private QuestionRepository questionRepository;
-
-    @Autowired
-     private AnswerOptionRepository answerOptionRepository;
-
-    @Autowired
-     private SurveyRepository surveyRepository;
+    private final QuestionMapper questionMapper;
+    private final QuestionService questionService;
 
     @GetMapping("/all")
-    public Iterable<Question> getAllQuestions() {
-        return questionRepository.findAll();
+    public ResponseEntity getAll(){
+        Collection<QuestionDTO> questions = questionMapper.questionToQuestionDto(
+                questionService.findAll());
+        return ResponseEntity.ok(questions);
+    }
+
+    @GetMapping("/byId/{id}")
+    public ResponseEntity <QuestionDTO> getById(@PathVariable long id) {
+        QuestionDTO questionDTO = questionMapper.questionToQuestionDto(questionService.findById(id));
+        return ResponseEntity.ok(questionDTO);
     }
 
 
     @GetMapping("/byText/{text}")
-    public Iterable<Question> getQuestionsByText(@PathVariable String text) {
-        return questionRepository.findAllByText(text);
+    public ResponseEntity <Collection<QuestionDTO>> getByText(@PathVariable String text) {
+        Collection<QuestionDTO> questionDTOS = questionMapper.questionToQuestionDto(questionService.findByText(text));
+        return ResponseEntity.ok(questionDTOS);
     }
-
-    /*
-    @GetMapping("/byId/{id}")
-    public Iterable<Question> getQuestionsById(@PathVariable long id) {
-
-        return questionRepository.findAllById(id);
-    }
-
-     */
 
     /*
     * http://localhost:8080/api/v1/question/bySurveyId/1
     * */
     @GetMapping("/bySurveyId/{survey_id}")
-    public Iterable<Question> getQuestionsBySurveyId(@PathVariable long survey_id){
-        return questionRepository.findBySurveyId(survey_id);
+    public ResponseEntity <Collection<QuestionDTO>> getBySurveyId(@PathVariable long survey_id){
+        Collection<QuestionDTO> questionDTOS = questionMapper.questionToQuestionDto(questionService.findBySurveyId(survey_id));
+        return ResponseEntity.ok(questionDTOS);
     }
 
     /*
-    * http://localhost:8080/api/v1/question/add?num=1&text=test1 psoriasis&id=1
+    * http://localhost:8080/api/v1/question/add
     * */
-    /*
+
     @PostMapping(path="/add")
-    public  String addQuestion(@RequestParam long num, @RequestParam String text, @RequestParam long id ){
-
-        Survey existingSurvey = surveyRepository.findAllById(id);
-        Question question =new Question(num, text, existingSurvey);
-        questionRepository.save(question);
-
-        return "Question No:"+num+ " " +text+" was added";
-
+    public QuestionDTO addQuestion (@RequestBody QuestionDTO questionDTO ){
+        Question question = questionService.add(questionMapper.questionDtoToQuestion(questionDTO));
+        return questionMapper.questionToQuestionDto(question);
     }
 
-     */
+    /*
+     * http://localhost:8080/api/v1/question/update/1
+     * */
+    @PatchMapping("/update/{id}")
+    public QuestionDTO updateQuestion (@RequestBody QuestionDTO questionDTO, @PathVariable long id){
+        Question question = questionMapper.questionDtoToQuestion(questionDTO);
+        return questionMapper.questionToQuestionDto(questionService.update(id,question));
+    }
+
+    @PutMapping("/update/{survey_id}/{question_id}/survey")
+    public ResponseEntity updadteSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
+        questionService.updateSurveyById(survey_id,question_id);
+        return ResponseEntity.ok().build();
+    }
+
 
     /*
     *http://localhost:8080/api/v1/question/delete/18

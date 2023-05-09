@@ -102,7 +102,6 @@ public class PatientServiceImpl implements PatientService{
             List<Answer> AnUpdateByPatientId = answerRepository.findByPatientId(id);
             AnUpdateByPatientId.forEach(answer -> answer.setPatient(null));
         }
-
         Patient patient = findById(id);
         patientRepository.delete(patient);
     }

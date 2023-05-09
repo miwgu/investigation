@@ -9,9 +9,11 @@ public interface QuestionService {
 
     Question findById(long id);
     Question update (long id, Question question);
+
+    Void updateSurveyById (long survey_id, long question_id);
     Collection<Question> findByText(String text);
     Collection<Question> findAll();
-    Collection<Question> findBySueveyId(long survey_id);
+    Collection<Question> findBySurveyId(long survey_id);
     //Question add(long num, String text, long id);
     Question add(Question question);
 

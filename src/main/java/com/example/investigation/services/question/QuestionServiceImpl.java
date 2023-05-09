@@ -37,7 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Collection<Question> findBySueveyId(long survey_id) {
+    public Collection<Question> findBySurveyId(long survey_id) {
         return questionRepository.findBySurveyId(survey_id);
     }
 
@@ -77,6 +77,16 @@ public class QuestionServiceImpl implements QuestionService {
 //            existingQuestion.setSurvey(question.getSurvey().getId());
 //        }
             return questionRepository.save(existingQuestion);
+    }
+
+    @Override
+    public Void updateSurveyById(long survey_id, long question_id) {
+        Question existingQuestion = getQuestion(question_id);
+        if(existingQuestion.getSurvey().getId()!=0) {
+            existingQuestion.setSurvey(surveyRepository.getById(survey_id));
+            questionRepository.save(existingQuestion);
+        }
+        return null;
     }
 
     @Override
