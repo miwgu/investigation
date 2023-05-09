@@ -33,14 +33,17 @@ public class QuestionController {
 
     @GetMapping("/byText/{text}")
     public Iterable<Question> getQuestionsByText(@PathVariable String text) {
-        return questionRepository.findByText(text);
+        return questionRepository.findAllByText(text);
     }
 
+    /*
     @GetMapping("/byId/{id}")
     public Iterable<Question> getQuestionsById(@PathVariable long id) {
 
         return questionRepository.findAllById(id);
     }
+
+     */
 
     /*
     * http://localhost:8080/api/v1/question/bySurveyId/1
@@ -70,6 +73,7 @@ public class QuestionController {
     /*
     *http://localhost:8080/api/v1/question/delete/18
     * */
+    /*
     @DeleteMapping(path = "/delete/{question_id}")
     public  String deleteQuestion(@PathVariable("question_id") long id){
         List<AnswerOption> AnOpUpdateQuestion = answerOptionRepository.findByQuestionId(id);
@@ -79,5 +83,7 @@ public class QuestionController {
 
         return "Question ID:"+id+ " "+"Question:"+existingQuestion.getText()+ " was deleted";
     }
+
+     */
 
 }

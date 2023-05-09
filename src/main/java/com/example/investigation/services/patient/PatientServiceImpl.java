@@ -2,7 +2,11 @@ package com.example.investigation.services.patient;
 
 import com.example.investigation.exception.MiwaException;
 import com.example.investigation.exception.ResourceNotFoundException;
+import com.example.investigation.models.Answer;
+import com.example.investigation.models.AnswerOption;
 import com.example.investigation.models.Patient;
+import com.example.investigation.repositories.AnswerOptionRepository;
+import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,6 +23,8 @@ public class PatientServiceImpl implements PatientService{
 
     private final Logger logger =  LoggerFactory.getLogger(PatientServiceImpl.class);
     private final PatientRepository patientRepository;
+
+    private final AnswerRepository answerRepository;
 
     //public  PatientServiceImpl(PatientRepository patientRepository){
 //        this.patientRepository = patientRepository;
@@ -90,6 +97,11 @@ public class PatientServiceImpl implements PatientService{
             // Otherwise I connot delete patient;
             //patientRepository.delete(patient);
         //} else logger.warn( "Patient id: "+ id + " doesn´t exist ");
+
+        if(!answerRepository.findByPatientId(id).isEmpty()) {
+            List<Answer> AnUpdateByPatientId = answerRepository.findByPatientId(id);
+            AnUpdateByPatientId.forEach(answer -> answer.setPatient(null));
+        }
 
         Patient patient = findById(id);
         patientRepository.delete(patient);

@@ -46,6 +46,7 @@ public class AnswerOptionController {
     /*
      * http://localhost:8080/answerOption/add?item=test1&id=1
      * */
+    /*
     @PostMapping(path="/add")
     public  String addAnswerOption(@RequestParam String item, @RequestParam long id ){
 
@@ -55,6 +56,8 @@ public class AnswerOptionController {
 
         return "Answer Option:"+item+" was added";
     }
+
+     */
 
     /*
      *http://localhost:8080/answerOption/delete/37

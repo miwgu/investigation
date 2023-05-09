@@ -21,7 +21,7 @@ public class Question {
     @JoinColumn(name="survey_id", referencedColumnName = "id")
     private Survey survey;
 
-
+/*
     public Question(){}
 
     public Question(long num, String text, Survey survey) {
@@ -29,4 +29,6 @@ public class Question {
         this.text = text;
         this.survey = survey;
     }
+
+ */
 }
