@@ -11,7 +11,7 @@ public interface QuestionService {
     Question update (long id, Question question);
 
     Void updateSurveyById (long survey_id, long question_id);
-    Collection<Question> findByText(String text);
+    Collection<Question> findAllByText(String text);
     Collection<Question> findAll();
     Collection<Question> findBySurveyId(long survey_id);
     //Question add(long num, String text, long id);

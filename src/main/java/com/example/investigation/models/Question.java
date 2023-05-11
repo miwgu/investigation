@@ -16,7 +16,7 @@ public class Question {
     private long id;
     private long num;
     private String text;
-    @OnDelete(action = OnDeleteAction.CASCADE)
+   // @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne // delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
     @JoinColumn(name="survey_id", referencedColumnName = "id")
     private Survey survey;

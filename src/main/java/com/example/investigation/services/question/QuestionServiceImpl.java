@@ -1,20 +1,30 @@
 package com.example.investigation.services.question;
 
 import com.example.investigation.exception.ResourceNotFoundException;
+import com.example.investigation.models.Answer;
+import com.example.investigation.models.AnswerOption;
 import com.example.investigation.models.Question;
 import com.example.investigation.models.Survey;
+import com.example.investigation.repositories.AnswerOptionRepository;
+import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.QuestionRepository;
 import com.example.investigation.repositories.SurveyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final SurveyRepository surveyRepository;
+    private final AnswerOptionRepository answerOptionRepository;
+    private final AnswerRepository answerRepository;
+
 
     @Override
     public Question findById(long id) {
@@ -27,7 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public Collection<Question> findByText(String text) {
+    public Collection<Question> findAllByText(String text) {
         return questionRepository.findAllByText(text);
     }
 
@@ -43,8 +53,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(Question question) {
-        if(question != null)
-           return questionRepository.save(question);
+        if (question != null)
+            return questionRepository.save(question);
         return null;
     }
 
@@ -67,22 +77,22 @@ public class QuestionServiceImpl implements QuestionService {
 
         Question existingQuestion = getQuestion(id);
 
-        if(question.getNum()!=0) {
+        if (question.getNum() != 0) {
             existingQuestion.setNum(question.getNum());
         }
-        if(question.getText()!=null && !question.getText().isEmpty()) {
+        if (question.getText() != null && !question.getText().isEmpty()) {
             existingQuestion.setText(question.getText());
         }
 //        if(question.getSurvey().getId()!=0) {
 //            existingQuestion.setSurvey(question.getSurvey().getId());
 //        }
-            return questionRepository.save(existingQuestion);
+        return questionRepository.save(existingQuestion);
     }
 
     @Override
     public Void updateSurveyById(long survey_id, long question_id) {
         Question existingQuestion = getQuestion(question_id);
-        if(existingQuestion.getSurvey().getId()!=0) {
+        if (existingQuestion.getSurvey().getId() != 0) {
             existingQuestion.setSurvey(surveyRepository.getById(survey_id));
             questionRepository.save(existingQuestion);
         }
@@ -91,8 +101,19 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteById(Long id) {
+        List<AnswerOption> answerOptions = answerOptionRepository.findByQuestionId(id);
+        if (!answerOptions.isEmpty()) {
+            for (AnswerOption answerOption : answerOptions) {
+                List<Answer> answers = answerRepository.findByAnswerOptionId(answerOption.getId());
+                for (Answer answer : answers) {
+                    answer.setAnswerOption(null);
 
-        Question question = findById(id);
-        questionRepository.delete(question);
+                }
+                answerOption.setQuestion(null);
+
+            }
+            Question question = findById(id);
+            questionRepository.delete(question);
+        }
     }
 }

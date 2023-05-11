@@ -26,23 +26,23 @@ public class QuestionController {
         return ResponseEntity.ok(questions);
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/search/byId/{id}")
     public ResponseEntity <QuestionDTO> getById(@PathVariable long id) {
         QuestionDTO questionDTO = questionMapper.questionToQuestionDto(questionService.findById(id));
         return ResponseEntity.ok(questionDTO);
     }
 
 
-    @GetMapping("/byText/{text}")
+    @GetMapping("/search/byText/{text}")
     public ResponseEntity <Collection<QuestionDTO>> getByText(@PathVariable String text) {
-        Collection<QuestionDTO> questionDTOS = questionMapper.questionToQuestionDto(questionService.findByText(text));
+        Collection<QuestionDTO> questionDTOS = questionMapper.questionToQuestionDto(questionService.findAllByText(text));
         return ResponseEntity.ok(questionDTOS);
     }
 
     /*
-    * http://localhost:8080/api/v1/question/bySurveyId/1
+    * http://localhost:8080/api/v1/question/search/bySurveyId/1
     * */
-    @GetMapping("/bySurveyId/{survey_id}")
+    @GetMapping("/search/bySurveyId/{survey_id}")
     public ResponseEntity <Collection<QuestionDTO>> getBySurveyId(@PathVariable long survey_id){
         Collection<QuestionDTO> questionDTOS = questionMapper.questionToQuestionDto(questionService.findBySurveyId(survey_id));
         return ResponseEntity.ok(questionDTOS);
@@ -67,8 +67,8 @@ public class QuestionController {
         return questionMapper.questionToQuestionDto(questionService.update(id,question));
     }
 
-    @PutMapping("/update/{survey_id}/{question_id}/survey")
-    public ResponseEntity updadteSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
+    @PutMapping("/update/questionId/{question_id}/surveyId/{survey_id}")
+    public ResponseEntity updateSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
         questionService.updateSurveyById(survey_id,question_id);
         return ResponseEntity.ok().build();
     }
@@ -77,17 +77,12 @@ public class QuestionController {
     /*
     *http://localhost:8080/api/v1/question/delete/18
     * */
-    /*
-    @DeleteMapping(path = "/delete/{question_id}")
-    public  String deleteQuestion(@PathVariable("question_id") long id){
-        List<AnswerOption> AnOpUpdateQuestion = answerOptionRepository.findByQuestionId(id);
-        AnOpUpdateQuestion.forEach(aop -> aop.setQuestion(null));
-        Question existingQuestion = questionRepository.findById(id);
-        questionRepository.delete(existingQuestion);
 
-        return "Question ID:"+id+ " "+"Question:"+existingQuestion.getText()+ " was deleted";
+    @DeleteMapping( "/delete/{id}")
+    public  ResponseEntity deleteQuestion (@PathVariable long id){
+        questionService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
-     */
 
 }

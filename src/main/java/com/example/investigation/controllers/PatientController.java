@@ -36,9 +36,9 @@ public class PatientController {
     }
 
     /*
-    * http://localhost:8080/api/v1/patient/byId/1
+    * http://localhost:8080/api/v1/patient/search/byId/1
     * */
-    @GetMapping("/byId/{id}")
+    @GetMapping("search/byId/{id}")
     public ResponseEntity<PatientDTO> getById(@PathVariable long id) {
         PatientDTO patientDTO = patientMapper.patientToPatientDto(patientService.findById(id));
         return ResponseEntity.ok(patientDTO);
@@ -46,31 +46,31 @@ public class PatientController {
     }
 
     /*
-    * http://localhost:8080/api/v1/patient/search/name/aki
+    * http://localhost:8080/api/v1/patient/search/byName/aki
     * You can use @PathVariable if you want to write "search/name/{name}"
     * */
-    @GetMapping("search/name/{name}")
+    @GetMapping("search/byName/{name}")
     public ResponseEntity<Collection<PatientDTO>> getAllByPatientName(@PathVariable String name) {
         Collection<PatientDTO> patientDTOS = patientMapper.patientToPatientDto(patientService.findByName(name));
         return ResponseEntity.ok(patientDTOS);
     }
 
     /*
-    * http://localhost:8080/patient/search/socialnumber?sn=195001011234
+    * http://localhost:8080/patient/search/bySocialnumber?sn=195001011234
     * You cannot use @PathVariable when you write ?sn=195001011234 You need to use @RequestParam
     * */
-    @GetMapping("search/socialnumber")
+    @GetMapping("search/bySocialnumber")
     public ResponseEntity<Collection<PatientDTO>> getBySocialNumber (@RequestParam String sn) {
         Collection<PatientDTO> patientDTOS = patientMapper.patientToPatientDto(patientService.findBySocialNumber(sn));
         return ResponseEntity.ok(patientDTOS);
     }
 
     /*
-     * http://localhost:8080/api/v1/patient/search/emil/sample2@hotmail.com
+     * http://localhost:8080/api/v1/patient/search/byEmail/sample2@hotmail.com
      * You can use @PathVariable if you want to write "search/name/{name}"
      * */
 
-    @GetMapping("search/email/{email}")
+    @GetMapping("search/byEmail/{email}")
     public ResponseEntity<Collection<PatientDTO>> getByEmail (@PathVariable  String email) {
         Collection<PatientDTO> patientDTOS = patientMapper.patientToPatientDto(patientService.findByEmail(email));
         return ResponseEntity.ok(patientDTOS);
@@ -136,7 +136,6 @@ public class PatientController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deletePatient(@PathVariable long id){
-
         patientService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
