@@ -5,6 +5,7 @@ import com.example.investigation.models.Question;
 import com.example.investigation.models.dto.QuestionDTO;
 import com.example.investigation.services.question.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,11 +67,19 @@ public class QuestionController {
         Question question = questionMapper.questionDtoToQuestion(questionDTO);
         return questionMapper.questionToQuestionDto(questionService.update(id,question));
     }
-
+/*
     @PutMapping("/update/questionId/{question_id}/surveyId/{survey_id}")
     public ResponseEntity updateSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
         questionService.updateSurveyById(survey_id,question_id);
         return ResponseEntity.ok().build();
+    }
+
+ */
+   //TODO: Need to change update method(updateQuestion) to change survey id directly
+    @PatchMapping("/update/questionId/{question_id}/surveyId/{survey_id}")
+    public QuestionDTO updateSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
+        questionService.updateSurveyById(survey_id,question_id);
+        return null;
     }
 
 
@@ -79,9 +88,10 @@ public class QuestionController {
     * */
 
     @DeleteMapping( "/delete/{id}")
-    public  ResponseEntity deleteQuestion (@PathVariable long id){
+    @ResponseStatus(value = HttpStatus.OK)//200
+    public  String deleteQuestion (@PathVariable long id){
         questionService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return "DELETE_SUCCESSFULLY";
     }
 
 

@@ -99,6 +99,11 @@ public class QuestionServiceImpl implements QuestionService {
         return null;
     }
 
+    /**
+     * This method set null to answer_op_id in answer Table.
+     * But it is not good to delete answer because some patients answered to the question already
+     */
+/*
     @Override
     public void deleteById(Long id) {
         List<AnswerOption> answerOptions = answerOptionRepository.findByQuestionId(id);
@@ -116,4 +121,48 @@ public class QuestionServiceImpl implements QuestionService {
             questionRepository.delete(question);
         }
     }
+    */
+
+    //TODO:  you need to think about survey model. It should be have active variable. If survey status, active is true you cannot delete question.
+
+    /**
+     * This method deletes question if this question is not answered by patient through answer_option.
+     */
+    @Override
+    public void deleteById(Long id) {
+        Question findQustionById = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("THIS_QUESTION_ID, " + id + " DOES_NOT_EXIST."));
+        if (findQustionById != null) {
+
+            List<AnswerOption> answerOptions = answerOptionRepository.findByQuestionId(id);
+            if (!answerOptions.isEmpty()) {
+                boolean canDelete = true;
+
+                for (AnswerOption answerOption : answerOptions) {
+                    List<Answer> answers = answerRepository.findByAnswerOptionId(answerOption.getId());
+                    if (!answers.isEmpty()) {
+                        canDelete = false;
+                        System.out.println("You can not delete this question because user already answered");
+                        break;
+                    }
+                }
+
+                if (canDelete) {
+                    for (AnswerOption answerOption : answerOptions) {
+                        answerOption.setQuestion(null);
+                    }
+                    Question question = findById(id);
+                    questionRepository.delete(question);
+                    System.out.println("Question id," + id + " is deleted");
+                }
+
+            } else {
+                Question question = findById(id);
+                questionRepository.delete(question);
+                System.out.println("Question id," + id + " is deleted");
+
+            }
+        }
+    }
+
 }
+
