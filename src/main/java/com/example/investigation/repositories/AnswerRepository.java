@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    List<Answer> findById(long id);
+    //List<Answer> findById(long id);
     List<Answer> findByPatientId(long patient_id);
     List<Answer> findByAnswerOptionId(long answer_op_id);
 }

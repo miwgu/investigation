@@ -28,11 +28,13 @@ public class AnswerContoroller {
     public Iterable<Answer> getAllPatients() {
         return answerRepository.findAll();
     }
-
+/*
     @GetMapping("/byId/{id}")
     public Iterable<Answer> getAnswersById(@PathVariable long id) {
         return answerRepository.findById(id);
     }
+
+ */
 
     @GetMapping("/byPatientId/{patient_id}")
     public Iterable<Answer> getAnswersByPatientId(@PathVariable long patient_id) {

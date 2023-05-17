@@ -1,75 +1,97 @@
 package com.example.investigation.controllers;
 
+import com.example.investigation.mappers.AnswerOptionMapper;
 import com.example.investigation.models.Answer;
 import com.example.investigation.models.AnswerOption;
 import com.example.investigation.models.Question;
+import com.example.investigation.models.dto.AnswerOptionDTO;
+import com.example.investigation.models.dto.PatientDTO;
 import com.example.investigation.repositories.AnswerOptionRepository;
 import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.QuestionRepository;
+import com.example.investigation.services.answer_option.AnswerOptionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/answerOption")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AnswerOptionController {
 
-    @Autowired
-    private AnswerOptionRepository answerOptionRepository;
+    private final AnswerOptionMapper answerOptionMapper;
+    private final AnswerOptionService answerOptionService;
 
-    @Autowired
-    private AnswerRepository answerRepository;
+    private final AnswerOptionRepository answerOptionRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+
+    private final QuestionRepository questionRepository;
 
     @GetMapping("/all")
-    public Iterable<AnswerOption> getAllPatients() {return answerOptionRepository.findAll();}
-
-    @GetMapping("/byItem/{item}")
-    public Iterable<AnswerOption> getQuestionsByItem(@PathVariable String item) {
-        return answerOptionRepository.findByItem(item);
+    public ResponseEntity getAll() {
+        Collection<AnswerOptionDTO> answerOptions = answerOptionMapper.answerOptionToAnswerOptionDto(
+        answerOptionService.findAll());
+        return ResponseEntity.ok(answerOptions);
     }
 
-    @GetMapping("/byId/{id}")
-    public Iterable<AnswerOption> getAnswerOptionById(@PathVariable long id) {
-        return answerOptionRepository.findAllById(id);
+
+    @GetMapping("search/byId/{id}")
+    public ResponseEntity<AnswerOptionDTO> getById(@PathVariable long id) {
+        AnswerOptionDTO answerOptionDTO = answerOptionMapper.answerOptionToAnswerOptionDto(answerOptionService.findById(id));
+        return ResponseEntity.ok(answerOptionDTO);
     }
 
-    @GetMapping("/byQuestionId/{question_id}")
-    public Iterable<AnswerOption> getAnswerOptionByQuestionId(@PathVariable long question_id){
-        return answerOptionRepository.findByQuestionId(question_id);
+    @GetMapping("search/byItem/{item}")
+    public ResponseEntity <Collection<AnswerOptionDTO>> getByItem(@PathVariable String item) {
+        Collection <AnswerOptionDTO> answerOptionDTOS = answerOptionMapper.answerOptionToAnswerOptionDto(answerOptionService.findAllByItem(item));
+        return ResponseEntity.ok(answerOptionDTOS) ;
+    }
+
+
+    @GetMapping("search/byQuestionId/{question_id}")
+    public ResponseEntity<Collection<AnswerOptionDTO>>getByQuestionId(@PathVariable long question_id){
+        Collection<AnswerOptionDTO> answerOptionDTOs = answerOptionMapper.answerOptionToAnswerOptionDto(answerOptionService.findByQuestionId(question_id));
+        return ResponseEntity.ok(answerOptionDTOs);
     }
 
     /*
-     * http://localhost:8080/answerOption/add?item=test1&id=1
+     * http://localhost:8080/api/v1/answerOption/add?item=test1&id=1
      * */
-    /*
+
     @PostMapping(path="/add")
-    public  String addAnswerOption(@RequestParam String item, @RequestParam long id ){
-
-        Question existingQuestion = questionRepository.findById(id);
-        AnswerOption answerOption =new AnswerOption(item, existingQuestion);
-        answerOptionRepository.save(answerOption);
-
-        return "Answer Option:"+item+" was added";
+    public  AnswerOptionDTO addAnswerOption(@RequestBody AnswerOptionDTO answerOptionDTO){
+        AnswerOption answerOption = answerOptionService.add(answerOptionMapper.answerOptionDtoToAnswerOption(answerOptionDTO));
+        return answerOptionMapper.answerOptionToAnswerOptionDto(answerOption);
     }
 
-     */
+    @PatchMapping("/update/{id}")
+    public AnswerOptionDTO updateAnswerOption (@RequestBody AnswerOptionDTO answerOptionDTO,@PathVariable long id){
+        AnswerOption answerOption = answerOptionMapper.answerOptionDtoToAnswerOption(answerOptionDTO);
+        return answerOptionMapper.answerOptionToAnswerOptionDto(answerOptionService.update(id, answerOption));
+    }
 
     /*
-     *http://localhost:8080/answerOption/delete/37
+     *http://localhost:8080/api/v1/answerOption/delete/37
      * */
-    @DeleteMapping(path = "/delete/{answer_op_id}")
-    public  String deleteAnswerOption(@PathVariable("answer_op_id") long id){
-        List<Answer> AnswerUpdateAOp = answerRepository.findByAnswerOptionId(id);
-        AnswerUpdateAOp.forEach(a -> a.setAnswerOption(null));
-        AnswerOption existingAO = answerOptionRepository.findById(id);
-        answerOptionRepository.delete(existingAO);
 
-        return "Answer Option ID:"+id+ " "+"Answer Option:"+existingAO.getItem()+ " was deleted";
+    @DeleteMapping(path = "/delete/{answer_op_id}")
+    @ResponseStatus(value = HttpStatus.OK) //200
+    public  String deleteAnswerOption(@PathVariable("answer_op_id") long id) {
+
+        List<Answer> answers = answerRepository.findByAnswerOptionId(id);
+        if (!answers.isEmpty()) {
+            return "YOU_CANNOT_DELETE_BECAUSE_USER_ALREADY_ANSWERED";
+        }
+        answerOptionService.deleteById(id);
+        return "DELETE_SUCCESSFULLY";
+
     }
 
 }

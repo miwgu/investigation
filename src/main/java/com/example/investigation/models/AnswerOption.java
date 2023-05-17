@@ -18,12 +18,14 @@ public class AnswerOption {
     @ManyToOne // delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
     @JoinColumn(name="question_id", referencedColumnName = "id")
     private Question question;
-
+/*
     public AnswerOption(){}
 
     public AnswerOption(String item, Question question) {
         this.item = item;
         this.question = question;
     }
+
+ */
 
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -90,13 +91,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Void updateSurveyById(long survey_id, long question_id) {
+    public Question updateSurveyById(long survey_id, long question_id) {
         Question existingQuestion = getQuestion(question_id);
         if (existingQuestion.getSurvey().getId() != 0) {
             existingQuestion.setSurvey(surveyRepository.getById(survey_id));
             questionRepository.save(existingQuestion);
         }
-        return null;
+        return questionRepository.getById(question_id);
     }
 
     /**
@@ -128,21 +129,51 @@ public class QuestionServiceImpl implements QuestionService {
     /**
      * This method deletes question if this question is not answered by patient through answer_option.
      */
+
     @Override
-    public void deleteById(Long id) {
-        Question findQustionById = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("THIS_QUESTION_ID, " + id + " DOES_NOT_EXIST."));
-        if (findQustionById != null) {
+    public String deleteById(Long id) {
+
+        Question findQuestionById = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("THIS_QUESTION_ID, " + id + " DOES_NOT_EXIST."));
+
+        List<AnswerOption> answerOptions = answerOptionRepository.findByQuestionId(id);
+
+        for (AnswerOption answerOption : answerOptions) {
+            long answerOption_id = answerOption.getId();
+            Optional<Answer> answer = answerRepository.findById(answerOption_id);
+            if (answer.isPresent()) {
+                //System.out.println("You can not delete this question because user already answered");
+                throw new ResourceNotFoundException("You can not delete this question because user already answered");
+            }
+        }
+
+        answerOptions.forEach(answerOption -> answerOption.setQuestion(null));
+        questionRepository.delete(findQuestionById);
+        //System.out.println("Question id," + id + " is deleted");
+
+        return "Question id," + id + " is deleted";
+    }
+
+    /*
+    @Override
+    public String deleteById(Long id) {
+        Question findQuestionById = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("THIS_QUESTION_ID, " + id + " DOES_NOT_EXIST."));
+        if (findQuestionById != null) {
 
             List<AnswerOption> answerOptions = answerOptionRepository.findByQuestionId(id);
             if (!answerOptions.isEmpty()) {
                 boolean canDelete = true;
 
                 for (AnswerOption answerOption : answerOptions) {
-                    List<Answer> answers = answerRepository.findByAnswerOptionId(answerOption.getId());
-                    if (!answers.isEmpty()) {
+//                    List<Answer> answers = answerRepository.findByAnswerOptionId(answerOption.getId());
+                    long answerOption_id = answerOption.getId();
+                    System.out.println(answerOption_id);
+                    Answer answer = answerRepository.findById(answerOption_id).orElseThrow(() -> new ResourceNotFoundException("THIS_ANSWER_ID, " + id + " DOES_NOT_EXIST."));
+                    if (answer != null) {
                         canDelete = false;
                         System.out.println("You can not delete this question because user already answered");
-                        break;
+                            throw new ResourceNotFoundException("You can not delete this question because user already answered");
+
+                        //break;
                     }
                 }
 
@@ -152,17 +183,19 @@ public class QuestionServiceImpl implements QuestionService {
                     }
                     Question question = findById(id);
                     questionRepository.delete(question);
-                    System.out.println("Question id," + id + " is deleted");
+                     System.out.println("Question id," + id + " is deleted");
                 }
 
             } else {
                 Question question = findById(id);
-                questionRepository.delete(question);
+               questionRepository.delete(question);
                 System.out.println("Question id," + id + " is deleted");
-
             }
         }
+        return "TEST";
     }
+
+     */
 
 }
 

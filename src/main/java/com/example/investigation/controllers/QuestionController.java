@@ -67,20 +67,22 @@ public class QuestionController {
         Question question = questionMapper.questionDtoToQuestion(questionDTO);
         return questionMapper.questionToQuestionDto(questionService.update(id,question));
     }
-/*
+
     @PutMapping("/update/questionId/{question_id}/surveyId/{survey_id}")
     public ResponseEntity updateSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
         questionService.updateSurveyById(survey_id,question_id);
         return ResponseEntity.ok().build();
     }
 
- */
+
    //TODO: Need to change update method(updateQuestion) to change survey id directly
+/*
     @PatchMapping("/update/questionId/{question_id}/surveyId/{survey_id}")
-    public QuestionDTO updateSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
-        questionService.updateSurveyById(survey_id,question_id);
-        return null;
+    public QuestionDTO updateSurveyById_2 (@PathVariable int survey_id, @PathVariable long question_id){
+        Question question = questionService.updateSurveyById(survey_id, question_id);
+        return questionMapper.questionToQuestionDto(question);
     }
+*/
 
 
     /*
@@ -90,8 +92,8 @@ public class QuestionController {
     @DeleteMapping( "/delete/{id}")
     @ResponseStatus(value = HttpStatus.OK)//200
     public  String deleteQuestion (@PathVariable long id){
-        questionService.deleteById(id);
-        return "DELETE_SUCCESSFULLY";
+        return questionService.deleteById(id);
+       // return "DELETE_SUCCESSFULLY";
     }
 
 
