@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -90,13 +91,29 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
+    public String deleteById(Long id) {
+
+        Patient findPatientById = patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("THIS_PATIENT_ID, " + id + " DOES_NOT_EXIST."));
+
+        List<Answer> answersByPatientId = answerRepository.findByPatientId(id);
+        if( !answersByPatientId.isEmpty()){
+            throw new ResourceNotFoundException("You can not delete this patient because user already answered");
+        }else {
+            patientRepository.delete(findPatientById);
+            return "Patient id," + id + " is deleted";
+        }
+    }
+
+    /*
+    @Override
     public void deleteById(Long id) {
         //if (patientRepository.existsById(id)){
-            //Patient patient = patientRepository.findById(id).get();
-            // I need to set null to the all answers
-            // Otherwise I connot delete patient;
-            //patientRepository.delete(patient);
+        //Patient patient = patientRepository.findById(id).get();
+        // I need to set null to the all answers
+        // Otherwise I connot delete patient;
+        //patientRepository.delete(patient);
         //} else logger.warn( "Patient id: "+ id + " doesn´t exist ");
+
 
         if(!answerRepository.findByPatientId(id).isEmpty()) {
             List<Answer> AnUpdateByPatientId = answerRepository.findByPatientId(id);
@@ -105,4 +122,6 @@ public class PatientServiceImpl implements PatientService{
         Patient patient = findById(id);
         patientRepository.delete(patient);
     }
+
+     */
 }

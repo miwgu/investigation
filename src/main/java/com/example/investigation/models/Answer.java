@@ -22,7 +22,9 @@ public class Answer {
     @OneToOne// delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
     @JoinColumn(name="answer_op_id", referencedColumnName = "id")
     private AnswerOption answerOption;
-
+/*
     public Answer(){}
+
+ */
 
 }

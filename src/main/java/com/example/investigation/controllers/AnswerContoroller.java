@@ -36,10 +36,13 @@ public class AnswerContoroller {
 
  */
 
+/*
     @GetMapping("/byPatientId/{patient_id}")
     public Iterable<Answer> getAnswersByPatientId(@PathVariable long patient_id) {
         return answerRepository.findByPatientId(patient_id);
     }
+
+ */
 
 
     /*

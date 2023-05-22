@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    //List<Answer> findById(long id);
-    List<Answer> findByPatientId(long patient_id);
+    Optional<Answer> findById(long id);
+    List <Answer> findByPatientId(long patient_id);
     List<Answer> findByAnswerOptionId(long answer_op_id);
 }

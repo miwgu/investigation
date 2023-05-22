@@ -135,9 +135,9 @@ public class PatientController {
    * */
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deletePatient(@PathVariable long id){
-        patientService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(value = HttpStatus.OK)//200
+    public String deletePatient(@PathVariable long id){
+        return patientService.deleteById(id);
     }
 
 

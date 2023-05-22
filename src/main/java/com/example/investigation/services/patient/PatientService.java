@@ -18,6 +18,6 @@ public interface PatientService{
 
     Patient add(Patient patient);
 
-    void deleteById(Long id);
+    String deleteById(Long id);
 
 }
