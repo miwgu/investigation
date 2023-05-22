@@ -69,7 +69,7 @@ public class QuestionController {
     }
 
     @PutMapping("/update/questionId/{question_id}/surveyId/{survey_id}")
-    public ResponseEntity updateSurveyById (@PathVariable int survey_id, @PathVariable long question_id){
+    public ResponseEntity updateSurveyById (@PathVariable long survey_id, @PathVariable long question_id){
         questionService.updateSurveyById(survey_id,question_id);
         return ResponseEntity.ok().build();
     }

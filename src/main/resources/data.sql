@@ -57,7 +57,7 @@ INSERT INTO answer_option(item,question_id) VALUES ('Blekinge', 2);--3
 INSERT INTO answer_option(item,question_id) VALUES ('Dalarna', 2);--4
 INSERT INTO answer_option(item,question_id) VALUES ('Gotland', 2);--5
 INSERT INTO answer_option(item,question_id) VALUES ('Stockholm',2 );--6
-INSERT INTO answer_option(item,question_id) VALUES ('Välmland', 2);--7
+INSERT INTO answer_option(item,question_id) VALUES ('Värmland', 2);--7
 INSERT INTO answer_option(item,question_id) VALUES ('Västerbotten', 2);--8
 INSERT INTO answer_option(item,question_id) VALUES ('Örebro', 2);--9
 INSERT INTO answer_option(item,question_id) VALUES ('Yes',3 );--10

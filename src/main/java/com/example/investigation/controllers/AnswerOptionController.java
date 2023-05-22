@@ -62,7 +62,7 @@ public class AnswerOptionController {
     }
 
     /*
-     * http://localhost:8080/api/v1/answerOption/add?item=test1&id=1
+     * http://localhost:8080/api/v1/answerOption/add
      * */
 
     @PostMapping(path="/add")
@@ -76,6 +76,13 @@ public class AnswerOptionController {
         AnswerOption answerOption = answerOptionMapper.answerOptionDtoToAnswerOption(answerOptionDTO);
         return answerOptionMapper.answerOptionToAnswerOptionDto(answerOptionService.update(id, answerOption));
     }
+
+    @PutMapping("/update/aoId/{ao_id}/questionId/{question_id}")
+    public ResponseEntity updateQuestionById(@PathVariable long question_id, @PathVariable long ao_id ){
+        answerOptionService.updateQuestionById(question_id,ao_id);
+        return ResponseEntity.ok().build();
+    }
+
 
     /*
      *http://localhost:8080/api/v1/answerOption/delete/37
