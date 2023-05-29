@@ -8,6 +8,5 @@ public class AnswerOptionDTO {
     private String item;
     private long question;
 
-    //private List<Answer> answers;
 
 }

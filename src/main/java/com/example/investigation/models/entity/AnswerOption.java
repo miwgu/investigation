@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 @Entity
 @Builder
-//@Table(name="answer_option")
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnswerOption {
@@ -20,12 +19,12 @@ public class AnswerOption {
     private String item;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
-    @JoinTable(name = "answeroption_question",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_option_id"))
+    @JoinTable(name = "answer_option_question",
+            joinColumns = @JoinColumn(name = "answer_option_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private Question question;
 
-    @OneToMany(mappedBy="answer")
+    @OneToMany(mappedBy = "answerOption")
     private List<Answer> answers;
 
 
