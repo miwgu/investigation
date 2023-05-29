@@ -3,6 +3,9 @@ package com.example.investigation.services.answer;
 import com.example.investigation.models.Answer;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 
 public interface AnswerService {
 
@@ -12,9 +15,16 @@ public interface AnswerService {
 
     Collection <Answer> findAllByPatientId(long patient_id);
     Collection <Answer> findAllByAnswerOptionId(long ao_id);
+
+    List<Map<String, Object>> findBySurveyId(long survey_id);
+
+    //    Collection <Answer> findBySurveyId(long survey_id);
     Collection<Answer> findAll();
-    Answer add(Answer answer);
+    Answer add(long patient_id, long ao_id);
+    //Answer add(Answer answer);
 
 
 
+
+    //List<Map<String, Object>> getBySurveyId(long surveyId);
 }

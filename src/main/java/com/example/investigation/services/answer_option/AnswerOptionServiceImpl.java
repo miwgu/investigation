@@ -26,7 +26,7 @@ public class AnswerOptionServiceImpl implements AnswerOptionService{
     }
 
     public AnswerOption getAnswerOption(long id) {
-        return answerOptionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This id, " + id + " does not exist."));
+        return answerOptionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This answer_option_id, " + id + " does not exist."));
     }
 
     @Override

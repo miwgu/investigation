@@ -33,7 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     private Question getQuestion(long id) {
-        return questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This id, " + id + " does not exist."));
+        return questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This question_id, " + id + " does not exist."));
     }
 
 

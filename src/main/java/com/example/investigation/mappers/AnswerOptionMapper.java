@@ -4,6 +4,7 @@ import com.example.investigation.models.AnswerOption;
 import com.example.investigation.models.Question;
 import com.example.investigation.models.Survey;
 import com.example.investigation.models.dto.AnswerOptionDTO;
+import com.example.investigation.services.answer.AnswerService;
 import com.example.investigation.services.answer_option.AnswerOptionService;
 import com.example.investigation.services.question.QuestionService;
 import org.mapstruct.Mapper;
@@ -18,6 +19,8 @@ public abstract class AnswerOptionMapper {
 
     @Autowired
     protected QuestionService questionService;
+
+    protected AnswerService answerService;
 
     @Mapping(target = "question", source = "question.id")
     public  abstract AnswerOptionDTO answerOptionToAnswerOptionDto (AnswerOption answerOption);

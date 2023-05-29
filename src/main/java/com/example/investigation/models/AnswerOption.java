@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -18,6 +20,9 @@ public class AnswerOption {
     @ManyToOne // delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
     @JoinColumn(name="question_id", referencedColumnName = "id")
     private Question question;
+
+ //   @OneToMany(mappedBy="answer")
+ //   private List<Answer> answers;
 /*
     public AnswerOption(){}
 

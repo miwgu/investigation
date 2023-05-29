@@ -20,7 +20,7 @@ public class SurveyServiceImpl implements SurveyService{
     }
 
     private Survey getSurvey(long id){
-        return surveyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This id, "+ id+" does not exist"));
+        return surveyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This survey_id, "+ id+" does not exist"));
     }
 
     @Override

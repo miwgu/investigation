@@ -5,13 +5,11 @@ import com.example.investigation.models.Patient;
 import com.example.investigation.models.dto.PatientDTO;
 import com.example.investigation.services.patient.PatientService;
 import lombok.RequiredArgsConstructor;
-import nonapi.io.github.classgraph.json.JSONUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

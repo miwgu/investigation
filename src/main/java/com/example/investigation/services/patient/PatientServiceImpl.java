@@ -36,7 +36,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     private Patient getPatient(long id) {
-        return patientRepository.findById(id).orElseThrow(() ->  new ResourceNotFoundException("This id, "+ id +" does not exist."));
+        return patientRepository.findById(id).orElseThrow(() ->  new ResourceNotFoundException("This patient_id, "+ id +" does not exist."));
     }
 
 

@@ -14,12 +14,12 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne //(cascade = CascadeType.ALL)
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @OneToOne// delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne// delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
     @JoinColumn(name="answer_op_id", referencedColumnName = "id")
     private AnswerOption answerOption;
 /*
