@@ -1,9 +1,6 @@
 package com.example.investigation.models.dto;
 
-import com.example.investigation.models.Answer;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class AnswerOptionDTO {

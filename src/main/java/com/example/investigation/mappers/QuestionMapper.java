@@ -1,7 +1,7 @@
 package com.example.investigation.mappers;
 
-import com.example.investigation.models.Question;
-import com.example.investigation.models.Survey;
+import com.example.investigation.models.entity.Question;
+import com.example.investigation.models.entity.Survey;
 import com.example.investigation.models.dto.QuestionDTO;
 import com.example.investigation.services.survey.SurveyService;
 import org.mapstruct.Mapper;

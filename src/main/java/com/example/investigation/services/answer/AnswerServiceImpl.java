@@ -1,9 +1,10 @@
 package com.example.investigation.services.answer;
 
 import com.example.investigation.exception.ResourceNotFoundException;
-import com.example.investigation.models.*;
+import com.example.investigation.models.entity.Answer;
+import com.example.investigation.models.entity.AnswerOption;
+import com.example.investigation.models.entity.Patient;
 import com.example.investigation.repositories.*;
-import com.example.investigation.services.patient.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

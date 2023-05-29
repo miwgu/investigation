@@ -1,4 +1,4 @@
-package com.example.investigation.models;
+package com.example.investigation.models.entity;
 import lombok.Getter;
 import lombok.Setter;
 

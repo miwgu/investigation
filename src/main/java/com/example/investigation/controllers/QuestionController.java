@@ -1,7 +1,7 @@
 package com.example.investigation.controllers;
 
 import com.example.investigation.mappers.QuestionMapper;
-import com.example.investigation.models.Question;
+import com.example.investigation.models.entity.Question;
 import com.example.investigation.models.dto.QuestionDTO;
 import com.example.investigation.services.question.QuestionService;
 import lombok.RequiredArgsConstructor;

@@ -1,21 +1,15 @@
 package com.example.investigation.controllers;
 
 import com.example.investigation.mappers.SurveyMapper;
-import com.example.investigation.models.Question;
-import com.example.investigation.models.Survey;
-import com.example.investigation.models.dto.PatientDTO;
+import com.example.investigation.models.entity.Survey;
 import com.example.investigation.models.dto.SurveyDTO;
-import com.example.investigation.repositories.QuestionRepository;
-import com.example.investigation.repositories.SurveyRepository;
 import com.example.investigation.services.survey.SurveyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 package com.example.investigation.services.question;
 
-import com.example.investigation.models.Patient;
-import com.example.investigation.models.Question;
+import com.example.investigation.models.entity.Question;
 
 import java.util.Collection;
 

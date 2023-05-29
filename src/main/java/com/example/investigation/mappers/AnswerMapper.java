@@ -1,15 +1,14 @@
 package com.example.investigation.mappers;
 
-import com.example.investigation.models.Answer;
-import com.example.investigation.models.AnswerOption;
-import com.example.investigation.models.Patient;
+import com.example.investigation.models.entity.Answer;
+import com.example.investigation.models.entity.AnswerOption;
+import com.example.investigation.models.entity.Patient;
 import com.example.investigation.models.dto.AnswerDTO;
 import com.example.investigation.services.answer_option.AnswerOptionService;
 import com.example.investigation.services.patient.PatientService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 

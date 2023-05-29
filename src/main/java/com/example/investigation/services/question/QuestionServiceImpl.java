@@ -1,10 +1,9 @@
 package com.example.investigation.services.question;
 
 import com.example.investigation.exception.ResourceNotFoundException;
-import com.example.investigation.models.Answer;
-import com.example.investigation.models.AnswerOption;
-import com.example.investigation.models.Question;
-import com.example.investigation.models.Survey;
+import com.example.investigation.models.entity.Answer;
+import com.example.investigation.models.entity.AnswerOption;
+import com.example.investigation.models.entity.Question;
 import com.example.investigation.repositories.AnswerOptionRepository;
 import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.QuestionRepository;
@@ -12,7 +11,6 @@ import com.example.investigation.repositories.SurveyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

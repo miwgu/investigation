@@ -1,8 +1,8 @@
 package com.example.investigation.services.answer_option;
 
 import com.example.investigation.exception.ResourceNotFoundException;
-import com.example.investigation.models.Answer;
-import com.example.investigation.models.AnswerOption;
+import com.example.investigation.models.entity.Answer;
+import com.example.investigation.models.entity.AnswerOption;
 import com.example.investigation.repositories.AnswerOptionRepository;
 import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.QuestionRepository;

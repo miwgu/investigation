@@ -1,6 +1,6 @@
 package com.example.investigation.services.answer;
 
-import com.example.investigation.models.Answer;
+import com.example.investigation.models.entity.Answer;
 
 import java.util.Collection;
 import java.util.List;

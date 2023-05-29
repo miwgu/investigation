@@ -1,7 +1,7 @@
 package com.example.investigation.services.survey;
 
 import com.example.investigation.exception.ResourceNotFoundException;
-import com.example.investigation.models.Survey;
+import com.example.investigation.models.entity.Survey;
 import com.example.investigation.repositories.SurveyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

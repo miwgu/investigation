@@ -1,6 +1,6 @@
 package com.example.investigation.services.answer_option;
 
-import com.example.investigation.models.AnswerOption;
+import com.example.investigation.models.entity.AnswerOption;
 
 import java.util.Collection;
 

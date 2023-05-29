@@ -1,6 +1,6 @@
 package com.example.investigation.services.survey;
 
-import com.example.investigation.models.Survey;
+import com.example.investigation.models.entity.Survey;
 
 import java.util.Collection;
 

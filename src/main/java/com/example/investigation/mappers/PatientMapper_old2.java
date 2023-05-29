@@ -1,6 +1,6 @@
 /*package com.example.investigation.mappers;
 
-import com.example.investigation.models.Patient;
+import com.example.investigation.models.entity.Patient;
 import com.example.investigation.models.dto.PatientDTO;
 import com.example.investigation.services.answer.AnswerService;
 import org.mapstruct.Mapper;

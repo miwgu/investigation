@@ -1,7 +1,7 @@
 package com.example.investigation.controllers;
 
 import com.example.investigation.mappers.PatientMapper;
-import com.example.investigation.models.Patient;
+import com.example.investigation.models.entity.Patient;
 import com.example.investigation.models.dto.PatientDTO;
 import com.example.investigation.services.patient.PatientService;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,8 @@
 package com.example.investigation.services.patient;
 
-import com.example.investigation.exception.MiwaException;
 import com.example.investigation.exception.ResourceNotFoundException;
-import com.example.investigation.models.Answer;
-import com.example.investigation.models.AnswerOption;
-import com.example.investigation.models.Patient;
-import com.example.investigation.repositories.AnswerOptionRepository;
+import com.example.investigation.models.entity.Answer;
+import com.example.investigation.models.entity.Patient;
 import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

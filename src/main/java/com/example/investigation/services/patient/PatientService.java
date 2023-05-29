@@ -1,10 +1,9 @@
 package com.example.investigation.services.patient;
 
-import com.example.investigation.models.Patient;
+import com.example.investigation.models.entity.Patient;
 
 
 import java.util.Collection;
-import java.util.Collections;
 
 public interface PatientService{
 

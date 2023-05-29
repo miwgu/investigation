@@ -1,17 +1,14 @@
 package com.example.investigation.controllers;
 
 import com.example.investigation.mappers.AnswerOptionMapper;
-import com.example.investigation.models.Answer;
-import com.example.investigation.models.AnswerOption;
-import com.example.investigation.models.Question;
+import com.example.investigation.models.entity.Answer;
+import com.example.investigation.models.entity.AnswerOption;
 import com.example.investigation.models.dto.AnswerOptionDTO;
-import com.example.investigation.models.dto.PatientDTO;
 import com.example.investigation.repositories.AnswerOptionRepository;
 import com.example.investigation.repositories.AnswerRepository;
 import com.example.investigation.repositories.QuestionRepository;
 import com.example.investigation.services.answer_option.AnswerOptionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

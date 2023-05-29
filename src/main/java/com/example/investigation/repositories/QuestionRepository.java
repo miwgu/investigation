@@ -1,6 +1,6 @@
 package com.example.investigation.repositories;
 
-import com.example.investigation.models.Question;
+import com.example.investigation.models.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
