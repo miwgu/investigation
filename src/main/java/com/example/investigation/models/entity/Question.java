@@ -1,7 +1,6 @@
 package com.example.investigation.models.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,7 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="question")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +20,10 @@ public class Question {
 
     @ManyToOne
     @JoinTable(name = "question_survey",
-            joinColumns = @JoinColumn(name = "survey_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id"))
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "survey_id"))
     private Survey survey;
-    @OneToMany(mappedBy= "answer_option")
+    @OneToMany(mappedBy= "question")
     private List <AnswerOption> answerOptions;
 
 

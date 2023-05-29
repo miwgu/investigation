@@ -1,4 +1,5 @@
 package com.example.investigation.models.entity;
+
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -10,7 +11,6 @@ import java.util.List;
 @Setter
 @Entity
 @Builder
-//@Table(name="answer_option")
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnswerOption {
@@ -19,13 +19,14 @@ public class AnswerOption {
     private long id;
     private String item;
     @OnDelete(action = OnDeleteAction.CASCADE)
+
     @ManyToOne
     @JoinTable(name = "answeroption_question",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_option_id"))
+            joinColumns = @JoinColumn(name = "answer_option_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private Question question;
 
-    @OneToMany(mappedBy="answer")
+    @OneToMany(mappedBy = "answerOption")
     private List<Answer> answers;
 
 

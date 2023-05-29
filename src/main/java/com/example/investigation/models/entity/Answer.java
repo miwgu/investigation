@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Builder
-//@Table(name="answer")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Answer {
@@ -16,14 +15,14 @@ public class Answer {
 
     @ManyToOne
     @JoinTable(name = "answer_patient",
-            joinColumns = @JoinColumn(name = "patient_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_id"))
+            joinColumns = @JoinColumn(name = "answer_id"),
+            inverseJoinColumns = @JoinColumn(name = "patient_id"))
     private Patient patient;
 
     @ManyToOne
     @JoinTable(name = "answer_answeroption",
-            joinColumns = @JoinColumn(name = "answer_option_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_id"))
+            joinColumns = @JoinColumn(name = "answer_id"),
+            inverseJoinColumns = @JoinColumn(name = "answer_option_id"))
     private AnswerOption answerOption;
 
 }
