@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,19 +16,14 @@ public class Question {
     private long id;
     private long num;
     private String text;
-   // @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne // delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
-    @JoinColumn(name="survey_id", referencedColumnName = "id")
+
+    @ManyToOne
+    @JoinTable(name = "question_survey",
+            joinColumns = @JoinColumn(name = "survey_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private Survey survey;
+    @OneToMany(mappedBy= "answer_option")
+    private List <AnswerOption> answerOptions;
 
-/*
-    public Question(){}
 
-    public Question(long num, String text, Survey survey) {
-        this.num = num;
-        this.text = text;
-        this.survey = survey;
-    }
-
- */
 }

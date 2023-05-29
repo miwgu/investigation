@@ -3,6 +3,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -12,13 +14,7 @@ public class Survey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-/*
-    public Survey(){}
-
-    public Survey(String name) {
-        this.name = name;
-    }
-
- */
+    @OneToMany(mappedBy = "question")
+    private List<Question> questions;
 
 }

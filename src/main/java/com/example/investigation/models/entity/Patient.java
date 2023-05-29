@@ -21,8 +21,8 @@ public class Patient {
     private String fullName;
 //    @Column(length = 100, nullable = false)
     private String email;
- //   @OneToMany(mappedBy="answer")
- //   private List<Answer>answers;
+    @OneToMany(mappedBy="answer")
+    private List<Answer>answers;
 
 
 
