@@ -21,6 +21,8 @@ public interface AnswerService {
     //    Collection <Answer> findBySurveyId(long survey_id);
     Collection<Answer> findAll();
     Answer add(long patient_id, long ao_id);
+
+    Answer createAnswer(Answer answer);
     //Answer add(Answer answer);
 
 

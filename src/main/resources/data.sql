@@ -1,29 +1,234 @@
--- DROP TABLE IF EXISTS answer;
--- DROP TABLE IF EXISTS patient;
--- DROP TABLE IF EXISTS answer_option;
--- DROP TABLE IF EXISTS question;
--- DROP TABLE IF EXISTS survey;
+DROP TABLE IF EXISTS answer_option_question;
+DROP TABLE IF EXISTS answer_patient;
+DROP TABLE IF EXISTS answer_answer_option;
+DROP TABLE IF EXISTS question_survey;
+DROP TABLE IF EXISTS answer CASCADE;
+DROP TABLE IF EXISTS patient;
+DROP TABLE IF EXISTS answer_option CASCADE;
+DROP TABLE IF EXISTS question CASCADE;
+DROP TABLE IF EXISTS survey CASCADE;
+
+-- I need change Insert Psoriasis
+
+INSERT INTO patient (social_number, full_name, email) VALUES ('195001011234','Akiko Yamada', 'sample1@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('1945022022345','Yasuo Yoshida', 'sample2@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('198003213456','Mitsuhide Akechi', 'sample3@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('198507124567','Yumiko Nitta', 'sample4@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('199204015678','Kotomi Kasai', 'sample5@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('199908086789','Yorito Hattori', 'sample6@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('198709237890','Kiyoko Yamane', 'sample7@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('197903108901','Chiyo Toyota', 'sample8@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('196611229012','Makiko Hirata', 'sample9@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('197710080123','Hiro Terada', 'sample10@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('194612201234','Mitsuharu Honda', 'sample11@hotmail.com');
+INSERT INTO patient (social_number, full_name, email) VALUES ('195705202345','Mia Persson', 'sample12@hotmail.com');
+
+--1 Psoriasis 2 Cancer 3 Diabetes
+INSERT INTO survey (name) VALUES ('Psoriasis');
+INSERT INTO survey (name) VALUES ('Cancer');
+INSERT INTO survey (name) VALUES ('Diabetes');
+
+---question for Psoriasis---1-7
+INSERT INTO question (num,text) VALUES ('1','What is your gender?');
+INSERT INTO question (num,text) VALUES ('2','Where is your care-region?');
+INSERT INTO question (num,text) VALUES ('3','Are you receiving adequate treatment for psoriasis?');
+INSERT INTO question (num,text) VALUES ('4','How many times have you visited your health center in the past 6 months?');
+INSERT INTO question (num,text) VALUES ('5','Who do you often meet when you visited your health center?');
+INSERT INTO question (num,text) VALUES ('6','Are you satisfied with the quality of the consulting at the health center?');
+INSERT INTO question (num,text) VALUES ('7','How do you feel your current health status after having psoriasis?');
+
+---question Psoriasis relation---1-7
+insert INTO question_survey (survey_id, question_id) VALUES (1,1);
+insert INTO question_survey (survey_id, question_id) VALUES (1,2);
+insert INTO question_survey (survey_id, question_id) VALUES (1,3);
+insert INTO question_survey (survey_id, question_id) VALUES (1,4);
+insert INTO question_survey (survey_id, question_id) VALUES (1,5);
+insert INTO question_survey (survey_id, question_id) VALUES (1,6);
+insert INTO question_survey (survey_id, question_id) VALUES (1,7);
+
+---answerOption for questions in Psoriasis---1-7
+INSERT INTO answer_option(item) VALUES ('Female' ); --1
+INSERT INTO answer_option(item) VALUES ('Male');--2
+INSERT INTO answer_option(item) VALUES ('Blekinge');--3
+INSERT INTO answer_option(item) VALUES ('Dalarna');--4
+INSERT INTO answer_option(item) VALUES ('Gotland');--5
+INSERT INTO answer_option(item) VALUES ('Stockholm' );--6
+INSERT INTO answer_option(item) VALUES ('Värmland');--7
+INSERT INTO answer_option(item) VALUES ('Västerbotten');--8
+INSERT INTO answer_option(item) VALUES ('Örebro');--9
+INSERT INTO answer_option(item) VALUES ('Yes');--10
+INSERT INTO answer_option(item) VALUES ('No');--11
+INSERT INTO answer_option(item) VALUES ('0');--12
+INSERT INTO answer_option(item) VALUES ('1-2');--13
+INSERT INTO answer_option(item) VALUES ('3-5');--14
+INSERT INTO answer_option(item) VALUES ('more than 6');--15
+INSERT INTO answer_option(item) VALUES ('physician');--16
+INSERT INTO answer_option(item) VALUES ('nurse');--17
+INSERT INTO answer_option(item) VALUES ('both physician and nurse');--18
+INSERT INTO answer_option(item) VALUES ('other healthcare professionals');--19
+INSERT INTO answer_option(item) VALUES ('Satisfied');--20
+INSERT INTO answer_option(item) VALUES ('I do not know');--21
+INSERT INTO answer_option(item) VALUES ('Unsatisfied');--22
+INSERT INTO answer_option(item) VALUES ('Excellent');--23
+INSERT INTO answer_option(item) VALUES ('Good');--24
+INSERT INTO answer_option(item) VALUES ('fair');--25
+INSERT INTO answer_option(item) VALUES ('poor');--26
+
+---answerOption for questions in Psoriasis relation---1-7
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (1,1);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (1,2);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,3);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,4);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,5);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,6);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,7);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,8);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (2,9);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (3,10);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (3,11);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (4,12);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (4,13);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (4,14);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (4,15);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (5,16);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (5,17);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (5,18);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (5,19);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (6,20);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (6,21);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (6,22);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (7,23);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (7,24);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (7,25);
+INSERT INTO answer_option_question (question_id, answer_option_id) VALUES (7,26);
+
+--ERROR-------
+
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,1);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,2);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,3);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,4);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,5);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,6);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (1,7);
 --
--- -- I need change Insert Psoriasis
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (1,1);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (6,2);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (10,3);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (13,4);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (17,5);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (22,6);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (25,7);
+-- ---------
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,8);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,9);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,10);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,11);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,12);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,13);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (2,14);
 --
--- INSERT INTO patient (social_number, full_name, email) VALUES ('195001011234','Akiko Yamada', 'sample1@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('1945022022345','Yasuo Yoshida', 'sample2@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('198003213456','Mitsuhide Akechi', 'sample3@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('198507124567','Yumiko Nitta', 'sample4@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('199204015678','Kotomi Kasai', 'sample5@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('199908086789','Yorito Hattori', 'sample6@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('198709237890','Kiyoko Yamane', 'sample7@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('197903108901','Chiyo Toyota', 'sample8@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('196611229012','Makiko Hirata', 'sample9@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('197710080123','Hiro Terada', 'sample10@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('194612201234','Mitsuharu Honda', 'sample11@hotmail.com');
--- INSERT INTO patient (social_number, full_name, email) VALUES ('195705202345','Mia Persson', 'sample12@hotmail.com');
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (2,8);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (6,9);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (11,10);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (14,11);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (16,12);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (21,13);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (25,14);
+-- -----------
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,15);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,16);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,17);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,18);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,19);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,20);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (3,21);
 --
--- --1 Psoriasis 2 Cancer 3 Diabetes
--- INSERT INTO survey (name) VALUES ('Psoriasis');
--- INSERT INTO survey (name) VALUES ('Cancer');
--- INSERT INTO survey (name) VALUES ('Diabetes');
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (2,15);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (8,16);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (10,17);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (14,18);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (18,19);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (21,20);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (26,21);
+-- -----------
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,22);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,23);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,24);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,25);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,26);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,27);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (4,28);
 --
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (1,22);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (9,23);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (10,24);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (13,25);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (18,26);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (20,27);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (24,28);
+-- ------------
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,29);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,30);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,31);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,32);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,33);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,34);
+-- INSERT INTO answer_patient (patient_id, answer_id) VALUES (5,35);
+--
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (1,29);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (8,30);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (10,31);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (15,32);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (18,33);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (20,34);
+-- INSERT INTO answer_answer_option (answer_option_id, answer_id) VALUES (26,35);
+-------------ERROR-------
+
+-----------TRY------------
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,1);
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,6);
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,10);
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,13);
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,17);
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,22);
+INSERT Into answer(patient_id, answer_op_id) VALUES (1,25);
+
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,2);
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,6);
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,11);
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,14);
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,16);
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,21);
+INSERT Into answer(patient_id, answer_op_id) VALUES (2,25);
+
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,2);
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,8);
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,10);
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,14);
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,18);
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,21);
+INSERT Into answer(patient_id, answer_op_id) VALUES (3,26);
+
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,1);
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,9);
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,10);
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,13);
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,18);
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,20);
+INSERT Into answer(patient_id, answer_op_id) VALUES (4,24);
+
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,1);
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,8);
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,10);
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,15);
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,18);
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,20);
+INSERT Into answer(patient_id, answer_op_id) VALUES (5,26);
+
+
+------------------------------------------------------------------------------------------------
+
 -- ---question for Psoriasis---1-7
 -- INSERT INTO question (num,text,survey_id) VALUES ('1','What is your gender?',1);
 -- INSERT INTO question (num,text,survey_id) VALUES ('2','Where is your care-region?',1);

@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface SurveyRepository extends JpaRepository<Survey,Long> {
     //Survey findById(long id);
-    Optional<Survey> findById(Long id);
+    //Optional<Survey> findById(Long id);
     @Modifying
     @Query
    ("select s from Survey s where LOWER (s.name) like LOWER(concat('%', ?1, '%'))")

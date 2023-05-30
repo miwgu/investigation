@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface AnswerOptionRepository extends JpaRepository<AnswerOption,Long> {
     //List<AnswerOption> findAllById (long id);
-    Optional <AnswerOption> findById(long id);
+    //Optional <AnswerOption> findById(long id);
     @Modifying
     @Query("select ao from AnswerOption ao where LOWER (ao.item) like LOWER(concat('%', ?1, '%'))")
     List<AnswerOption> findAllByItem(String item);

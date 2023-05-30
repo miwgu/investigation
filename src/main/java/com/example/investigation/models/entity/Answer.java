@@ -13,17 +13,19 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinTable(name = "answer_patient",
-            joinColumns = @JoinColumn(name = "answer_id"),
-            inverseJoinColumns = @JoinColumn(name = "patient_id"))
+    @ManyToOne (cascade = CascadeType.ALL)
+//    @JoinTable(name = "answer_patient",
+//            joinColumns = @JoinColumn(name = "answer_id"),
+//            inverseJoinColumns = @JoinColumn(name = "patient_id"))
+    @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
 
-    @ManyToOne
-    @JoinTable(name = "answer_answer_option",
-            joinColumns = @JoinColumn(name = "answer_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_option_id"))
+    @ManyToOne (cascade = CascadeType.ALL)
+//    @JoinTable(name = "answer_answer_option",
+//            joinColumns = @JoinColumn(name = "answer_id"),
+//            inverseJoinColumns = @JoinColumn(name = "answer_option_id"))
+    @JoinColumn(name="answer_op_id",referencedColumnName = "id")
     private AnswerOption answerOption;
 
 }

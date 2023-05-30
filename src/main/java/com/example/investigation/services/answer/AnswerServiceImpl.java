@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +74,11 @@ public class AnswerServiceImpl implements AnswerService{
         answer.setPatient(patient);
         answer.setAnswerOption(ao);
 
+        return answerRepository.save(answer);
+    }
+
+    @Override
+    public Answer createAnswer(Answer answer) {
         return answerRepository.save(answer);
     }
 //    @Override
