@@ -3,6 +3,8 @@ package com.example.investigation.controllers;
 import com.example.investigation.mappers.AnswerMapper;
 import com.example.investigation.mappers.AnswerOptionMapper;
 import com.example.investigation.mappers.PatientMapper;
+import com.example.investigation.models.dto.AnswerOptionDTO;
+import com.example.investigation.models.dto.PatientDTO;
 import com.example.investigation.models.entity.Answer;
 import com.example.investigation.models.dto.AnswerDTO;
 import com.example.investigation.repositories.AnswerRepository;
@@ -87,34 +89,25 @@ public class AnswerController {
 //        Answer answer = answerService.add(toAnswer,p_id, ao_id);
 //        return answerMapper.answerToAnswerDto(answer);
 //    }
-    @PostMapping("/add")
-    public AnswerDTO addAnswer(@RequestBody Answer answer){
-        //Answer toAnswer = answerMapper.answerDtoToAnswer(answerDTO);
-        //Answer answer = answerService.create(toAnswer);
-        return answerMapper.answerToAnswerDto(answer);
-    }
+//    @PostMapping("/add")
+//    public AnswerDTO addAnswer(@RequestBody Answer answer){
+//        //Answer toAnswer = answerMapper.answerDtoToAnswer(answerDTO);
+//        //Answer answer = answerService.create(toAnswer);
+//        return answerMapper.answerToAnswerDto(answer);
+//    }
 
     /*
      * http://localhost:8080/api/v1/answer/add
      * */
 
-    /*
+
     @PostMapping("/add")
     public AnswerDTO addAnswer(@RequestBody PatientDTO patientDTO, @RequestBody AnswerOptionDTO answerOptionDTO){
         Answer answer = answerService.add(patientMapper.patientDtoToPatient(patientDTO).getId(), answerOptionMapper.answerOptionDtoToAnswerOption(answerOptionDTO).getId());
         return answerMapper.answerToAnswerDto(answer);
     }
 
-     */
 
-    /*
-    @PostMapping("/add")
-    public AnswerDTO addAnswer(@RequestBody PatientDTO patientDTO, @RequestBody AnswerOptionDTO answerOptionDTO){
-        Answer answer = answerService.add(patientMapper.patientDtoToPatient(patientDTO).getId(), answerOptionMapper.answerOptionDtoToAnswerOption(answerOptionDTO).getId());
-        return answerMapper.answerToAnswerDto(answer);
-    }
-
-     */
 /*
     @PostMapping("/add")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -124,8 +117,6 @@ public class AnswerController {
     }
 
  */
-
-
 
 
 

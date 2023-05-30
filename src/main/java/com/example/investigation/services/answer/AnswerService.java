@@ -20,7 +20,10 @@ public interface AnswerService {
 
     //    Collection <Answer> findBySurveyId(long survey_id);
     Collection<Answer> findAll();
-    Answer add(Answer answer,Long patient_id, Long ao_id);
+
+    Answer add(Long patient_id, Long ao_id);
+
+    //Answer add(Answer answer,Long patient_id, Long ao_id);
 
     Answer create(Answer toAnswer);
     //Answer add(Answer answer);

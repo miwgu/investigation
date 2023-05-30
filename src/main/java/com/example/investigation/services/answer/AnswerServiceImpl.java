@@ -62,7 +62,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
      */
-
+/*
     @Override
     public Answer add(Answer answer,Long patient_id, Long ao_id) {
         answerRepository.save(answer);
@@ -73,6 +73,21 @@ public class AnswerServiceImpl implements AnswerService{
         answer.setAnswerOption(ao);
 
         return answer;
+    }
+
+ */
+
+
+    @Override
+    public Answer add(Long patient_id, Long ao_id) {
+        Answer answer = new Answer();
+        Patient patient= patientRepository.findById(patient_id).orElseThrow(()-> new ResourceNotFoundException("PATIENT_ID_NOT_EXIST"));
+        AnswerOption ao = answerOptionRepository.findById(ao_id).orElseThrow(()-> new ResourceNotFoundException("ANSWER_OPTION_ID_NOT_EXIST"));
+
+        answer.setPatient(patient);
+        answer.setAnswerOption(ao);
+
+        return answerRepository.save(answer);
     }
 
     @Override

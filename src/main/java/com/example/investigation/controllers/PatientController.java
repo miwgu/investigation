@@ -78,7 +78,7 @@ public class PatientController {
     /*
     * http://localhost:8080/api/v1/patient/add
     * */
-
+    // TODO: Add method should be rewrite just now it does not work
     @PostMapping("/add")
     @ResponseStatus(value = HttpStatus.CREATED)
     public PatientDTO addPatient(@RequestBody PatientDTO patientDTO){
