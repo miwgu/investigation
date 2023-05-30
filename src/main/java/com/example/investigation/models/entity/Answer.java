@@ -1,28 +1,26 @@
 package com.example.investigation.models.entity;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name="answer")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @ManyToOne
-    @JoinTable(name = "answer_patient",
-            joinColumns = @JoinColumn(name = "answer_id"),
-            inverseJoinColumns = @JoinColumn(name = "patient_id"))
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
-    @ManyToOne
-    @JoinTable(name = "answer_answeroption",
-            joinColumns = @JoinColumn(name = "answer_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_option_id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne// delete (cascade=CascadeType.ALL) It works by using hibernate @OnDelete annotation.
+    @JoinColumn(name="answer_op_id", referencedColumnName = "id")
     private AnswerOption answerOption;
 
 }

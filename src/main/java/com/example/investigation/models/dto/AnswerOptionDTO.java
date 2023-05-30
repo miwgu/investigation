@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class AnswerOptionDTO {
-    private long id;
+    private Long id;
     private String item;
-    private long question;
+    private Long question;
 
     //private List<Answer> answers;
 

@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class QuestionDTO {
-    private long id;
-    private long num;
+    private Long id;
+    private Long num;
     private String text;
-    private long survey;
+    private Long survey;
 
 }

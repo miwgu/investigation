@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class AnswerDTO {
 
-    private long id;
-    private long patient;
-    private long answerOption;
+    private Long id;
+    private Long patient;
+    private Long answerOption;
 
 }

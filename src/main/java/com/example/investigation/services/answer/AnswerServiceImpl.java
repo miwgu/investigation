@@ -64,16 +64,25 @@ public class AnswerServiceImpl implements AnswerService{
      */
 
     @Override
-    public Answer add(long patient_id, long ao_id) {
-        Answer answer = new Answer();
-
-        Patient patient= patientRepository.getById(patient_id);
-        AnswerOption ao = answerOptionRepository.getById(ao_id);
+    public Answer add(Answer answer,Long patient_id, Long ao_id) {
+        answerRepository.save(answer);
+        Patient patient= patientRepository.findById(patient_id).orElseThrow(()-> new ResourceNotFoundException("PATIENT_ID_NOT_EXIST"));
+        AnswerOption ao = answerOptionRepository.findById(ao_id).orElseThrow(()-> new ResourceNotFoundException("ANSWER_OPTION_ID_NOT_EXIST"));
 
         answer.setPatient(patient);
         answer.setAnswerOption(ao);
 
-        return answerRepository.save(answer);
+        return answer;
+    }
+
+    @Override
+    public Answer create(Answer toAnswer) {
+        Patient patient= patientRepository.findById(toAnswer.getPatient().getId()).orElseThrow(()-> new ResourceNotFoundException("PATIENT_ID_NOT_EXIST"));
+        AnswerOption ao = answerOptionRepository.findById(toAnswer.getAnswerOption().getId()).orElseThrow(()-> new ResourceNotFoundException("ANSWER_OPTION_ID_NOT_EXIST"));
+
+        toAnswer.setPatient(patient);
+        toAnswer.setAnswerOption(ao);
+        return answerRepository.save(toAnswer) ;
     }
 //    @Override
 //    public List<Map<String, Object>> getBySurveyId(long surveyId) {

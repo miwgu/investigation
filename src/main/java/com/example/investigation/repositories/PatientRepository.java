@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     //List<Patient> findAllById(long id);
 
-    Optional<Patient> findById(Long id);
+    //Optional<Patient> findById(Long id);
     @Modifying
     @Query//("select p from Patient p where p.fullName like %?1%")
     ("select p from Patient p where LOWER (p.fullName) like LOWER(concat('%', ?1, '%'))")
